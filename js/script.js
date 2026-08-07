@@ -90,6 +90,7 @@ function openInvitation() {
   document.body.classList.remove("is-locked");
   document.body.classList.add("invitation-open");
   createYoutubeAudio();
+  setupReveal();
 
   window.setTimeout(() => {
     gate.hidden = true;
@@ -98,24 +99,18 @@ function openInvitation() {
 
 function setupReveal() {
   const elements = [...document.querySelectorAll(".reveal")];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    elements.forEach((element) => element.classList.add("is-visible"));
-    return;
-  }
+  elements.forEach((element, index) => {
+    if (reducedMotion) {
+      element.classList.add("is-visible");
+      return;
+    }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: "0px 0px -3% 0px"
+    window.setTimeout(() => {
+      element.classList.add("is-visible");
+    }, 70 + (index * 85));
   });
-
-  elements.forEach((element) => observer.observe(element));
 }
 
 openButton.addEventListener("click", openInvitation);
@@ -126,7 +121,6 @@ window.addEventListener("keydown", (event) => {
 });
 
 applyEventConfig();
-setupReveal();
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", startOriginalSakuraEffect, { once: true });

@@ -351,143 +351,158 @@
 /*******************************/
 
 
+
 /* ================================================================
-   NEU Graduation Invitation — Nguyễn Thị Bích Ngọc
-   Refactor theo bố cục thiệp tốt nghiệp dọc: giấy kem, chữ trang trọng,
-   ảnh bên phải, thông tin bên trái; palette hồng nữ tính + xanh NEU.
+   NEU Graduation Invitation — Single Viewport Edition
+   Mục tiêu: toàn bộ thiệp nằm trong đúng 1 cửa sổ, không cuộn trang.
+   Responsive theo chiều rộng + chiều cao cho desktop/mobile/landscape.
    ================================================================ */
 
 :root {
-  --paper: #fffdf8;
-  --paper-warm: #fbf5ef;
-  --canvas: #efdce4;
-  --canvas-soft: #f8edf1;
+  --paper: #fffdf9;
+  --paper-2: #fbf4f1;
+  --canvas: #ead3dc;
+  --canvas-2: #f8ebf0;
   --rose: #c85f7c;
-  --rose-dark: #8f344d;
-  --rose-deep: #7a263f;
-  --rose-soft: #e8aebe;
-  --rose-pale: #f6dbe3;
-  --neu-blue: #163f78;
-  --neu-blue-soft: #5672a0;
-  --ink: #2e2a2c;
-  --muted: #756b6f;
-  --line: rgba(22, 63, 120, 0.28);
-  --shadow: 0 30px 90px rgba(83, 45, 59, 0.18), 0 5px 18px rgba(83, 45, 59, 0.08);
+  --rose-dark: #8e344d;
+  --rose-deep: #75223d;
+  --rose-soft: #e7a8b9;
+  --rose-pale: #f8dfe6;
+  --neu-blue: #173f78;
+  --neu-blue-soft: #5f759a;
+  --ink: #30292c;
+  --muted: #746a6e;
+  --line: rgba(23, 63, 120, .22);
+  --shadow: 0 24px 70px rgba(87, 48, 63, .18), 0 4px 16px rgba(87, 48, 63, .08);
   --sans: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --serif: "Playfair Display", Georgia, serif;
   --script: "Dancing Script", cursive;
 }
 
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
-html {
-  scroll-behavior: smooth;
-  background: var(--canvas);
-}
+html { background: var(--canvas); }
 
 body {
-  margin: 0;
   min-width: 320px;
-  min-height: 100vh;
-  overflow-x: hidden;
+  min-height: 100dvh;
   color: var(--ink);
   font-family: var(--sans);
   background:
-    radial-gradient(circle at 14% 12%, rgba(255,255,255,.78), transparent 30%),
-    radial-gradient(circle at 86% 82%, rgba(255,255,255,.48), transparent 34%),
-    linear-gradient(145deg, var(--canvas-soft), var(--canvas));
+    radial-gradient(circle at 14% 12%, rgba(255,255,255,.76), transparent 27%),
+    radial-gradient(circle at 85% 88%, rgba(255,255,255,.46), transparent 32%),
+    linear-gradient(145deg, var(--canvas-2), var(--canvas));
 }
 
-body.is-locked {
-  overflow: hidden;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 22%, rgba(255,255,255,.55) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 76% 71%, rgba(255,255,255,.40) 0 1px, transparent 1.2px);
+  background-size: 18px 18px, 26px 26px;
+  opacity: .45;
 }
 
-button,
-a {
-  font: inherit;
-}
+body.is-locked { overflow: hidden; }
+button, a { font: inherit; }
+a { color: inherit; }
 
-a {
-  color: inherit;
-}
-
-/* Sakura container kept from the original project */
 .sakura-falling {
   position: fixed;
   inset: 0;
   z-index: 80;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   pointer-events: none;
 }
 
-/* Same original Sakura movement, recolored to match the new pink invitation. */
 .sakura {
   z-index: 81 !important;
-  background: linear-gradient(135deg, #f5bdcd 0%, #ce6e8b 58%, #fff0f4 100%) !important;
-  box-shadow: 0 1px 2px rgba(126, 44, 70, .12);
-  opacity: .72;
+  background: linear-gradient(135deg, #ffdce7 0%, #da8199 58%, #fff5f8 100%) !important;
+  box-shadow: 0 1px 2px rgba(126, 44, 70, .11);
+  opacity: .70;
 }
 
 .site-shell {
   position: relative;
   z-index: 2;
-  width: 100%;
-  padding: clamp(18px, 3vw, 40px) 12px clamp(40px, 7vw, 88px);
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  height: 100dvh;
+  padding:
+    max(7px, env(safe-area-inset-top))
+    max(7px, env(safe-area-inset-right))
+    max(7px, env(safe-area-inset-bottom))
+    max(7px, env(safe-area-inset-left));
+  overflow: hidden;
 }
 
 .invitation-paper {
   position: relative;
-  width: min(760px, 100%);
-  min-height: 1080px;
-  margin: 0 auto;
-  overflow: hidden;
   isolation: isolate;
-  padding: clamp(42px, 7vw, 72px) clamp(28px, 7vw, 72px) 30px;
-  border: 1px solid rgba(120, 89, 99, .10);
-  border-radius: 4px 4px 34px 4px;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  width: min(720px, 95vw, calc((100dvh - 16px) * .79));
+  height: min(920px, calc(100dvh - 14px));
+  margin: 0;
+  padding: clamp(14px, 2.1dvh, 25px) clamp(16px, 3.1vw, 38px) clamp(11px, 1.8dvh, 20px);
+  overflow: hidden;
+  border: 1px solid rgba(127, 91, 103, .12);
+  border-radius: clamp(12px, 2.2vmin, 25px);
   background:
-    radial-gradient(circle at 20% 10%, rgba(210, 190, 182, .10) 0 1px, transparent 1.2px) 0 0 / 8px 8px,
-    radial-gradient(circle at 80% 35%, rgba(203, 183, 174, .08) 0 1px, transparent 1.3px) 0 0 / 11px 11px,
-    linear-gradient(180deg, rgba(255,255,255,.72), rgba(250,246,239,.95)),
+    linear-gradient(180deg, rgba(255,255,255,.84), rgba(251,246,240,.96)),
     var(--paper);
   box-shadow: var(--shadow);
+}
+
+.invitation-paper::before {
+  content: "";
+  position: absolute;
+  inset: clamp(7px, 1.3vmin, 12px);
+  z-index: -1;
+  border: 1px solid rgba(199, 154, 169, .24);
+  border-radius: clamp(9px, 1.8vmin, 20px);
+  pointer-events: none;
 }
 
 .invitation-paper::after {
   content: "";
   position: absolute;
-  inset: 13px;
-  z-index: -1;
-  border: 1px solid rgba(207, 172, 184, .22);
-  border-radius: 2px 2px 28px 2px;
+  inset: 0;
+  z-index: -2;
   pointer-events: none;
+  background:
+    radial-gradient(ellipse at 0 0, rgba(232, 174, 190, .12), transparent 33%),
+    radial-gradient(ellipse at 100% 100%, rgba(23, 63, 120, .07), transparent 35%);
 }
 
 .paper-botanical {
   position: absolute;
   z-index: -1;
-  width: 235px;
-  color: #b8aea7;
-  opacity: .14;
+  width: min(32%, 220px);
+  color: #aaa09a;
+  opacity: .12;
   filter: drop-shadow(1px 1px 0 rgba(255,255,255,.9));
   pointer-events: none;
 }
+.paper-botanical--left { top: -2%; left: -12%; }
+.paper-botanical--right { top: 12%; right: -12%; transform: scaleX(-1); }
 
-.paper-botanical--left {
-  top: 24px;
-  left: -78px;
-}
-
-.paper-botanical--right {
-  top: 118px;
-  right: -82px;
-  transform: scaleX(-1);
-}
-
+/* ---------- Top school mark ---------- */
 .university-heading {
   position: relative;
   z-index: 2;
@@ -495,30 +510,31 @@ a {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  line-height: 1.15;
 }
 
 .academic-mark {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 4px;
+  gap: clamp(5px, .8vmin, 8px);
+  margin-bottom: 1px;
   color: var(--neu-blue);
 }
 
 .academic-mark__cap {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border: 2px solid var(--rose);
+  width: clamp(24px, 3.6dvh, 34px);
+  height: clamp(24px, 3.6dvh, 34px);
+  border: 1.5px solid var(--rose);
   border-radius: 50%;
-  background: rgba(255,255,255,.56);
+  background: rgba(255,255,255,.62);
 }
 
 .academic-mark__cap svg {
-  width: 23px;
-  height: 23px;
+  width: 66%;
+  height: 66%;
   fill: none;
   stroke: currentColor;
   stroke-width: 2.3;
@@ -528,40 +544,40 @@ a {
 
 .academic-mark strong {
   font-family: var(--serif);
-  font-size: 1.72rem;
+  font-size: clamp(1.05rem, 2.45dvh, 1.62rem);
   font-weight: 800;
-  letter-spacing: .01em;
 }
 
 .university-heading h2 {
-  margin: 5px 0 2px;
+  margin: 2px 0 1px;
   color: var(--neu-blue);
-  font-size: clamp(.98rem, 2.3vw, 1.22rem);
+  font-size: clamp(.68rem, 1.5dvh, 1.03rem);
   font-weight: 700;
-  letter-spacing: .035em;
+  letter-spacing: .045em;
 }
 
 .university-heading p {
   margin: 0;
   color: var(--neu-blue-soft);
   font-family: var(--serif);
-  font-size: .78rem;
+  font-size: clamp(.52rem, 1.08dvh, .72rem);
   font-style: italic;
 }
 
 .class-line {
   display: inline-flex;
-  margin-top: 8px;
+  margin-top: clamp(2px, .55dvh, 5px);
   color: #927983;
-  font-size: .61rem;
+  font-size: clamp(.43rem, .86dvh, .58rem);
   font-weight: 600;
-  letter-spacing: .16em;
+  letter-spacing: .14em;
 }
 
+/* ---------- Invitation title block ---------- */
 .invite-copy {
   position: relative;
   z-index: 2;
-  margin-top: 30px;
+  margin-top: clamp(5px, 1.05dvh, 11px);
   text-align: center;
 }
 
@@ -569,39 +585,31 @@ a {
   margin: 0;
   color: var(--rose-dark);
   font-family: var(--script);
-  font-size: clamp(3.9rem, 11vw, 6rem);
+  font-size: clamp(2.35rem, 5.8dvh, 4.25rem);
   font-weight: 600;
   letter-spacing: -.04em;
-  line-height: .9;
-  text-shadow: 0 2px 0 rgba(255,255,255,.7);
+  line-height: .84;
+  text-shadow: 0 2px 0 rgba(255,255,255,.74);
 }
 
 .cap-divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: min(290px, 76%);
-  margin: 10px auto 17px;
+  gap: 8px;
+  width: min(245px, 70%);
+  margin: clamp(3px, .55dvh, 6px) auto clamp(4px, .8dvh, 8px);
   color: var(--neu-blue);
 }
 
-.cap-divider span {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(22,63,120,.58));
-}
-
-.cap-divider span:last-child {
-  background: linear-gradient(90deg, rgba(22,63,120,.58), transparent);
-}
-
+.cap-divider span { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(22,63,120,.5)); }
+.cap-divider span:last-child { background: linear-gradient(90deg, rgba(22,63,120,.5), transparent); }
 .cap-divider svg {
-  flex: 0 0 36px;
-  width: 36px;
+  flex: 0 0 clamp(23px, 3.3dvh, 31px);
+  width: clamp(23px, 3.3dvh, 31px);
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.3;
+  stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -609,93 +617,92 @@ a {
 .formal-line {
   margin: 0;
   color: var(--neu-blue);
-  font-size: clamp(.92rem, 2.2vw, 1.06rem);
+  font-size: clamp(.58rem, 1.25dvh, .88rem);
   font-weight: 500;
-  letter-spacing: .01em;
 }
 
 .guest-name {
-  margin: 2px auto -2px;
+  margin: 0 auto -1px;
   color: #292325;
   font-family: var(--serif);
-  font-size: clamp(2.05rem, 5.2vw, 3.05rem);
+  font-size: clamp(1.28rem, 2.8dvh, 2.1rem);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.02;
 }
 
 .guest-rule {
-  width: min(365px, 76%);
-  margin: 0 auto 9px;
-  border-top: 2px dotted rgba(22,63,120,.42);
+  width: min(315px, 72%);
+  margin: 0 auto clamp(2px, .55dvh, 5px);
+  border-top: 1.5px dotted rgba(22,63,120,.38);
 }
 
-.formal-line--second {
-  margin-bottom: 1px;
-}
+.formal-line--second { margin-bottom: 0; }
 
 .graduate-script {
-  margin: 2px 0 -5px;
+  margin: 0;
   color: var(--rose-dark);
   font-family: var(--script);
-  font-size: clamp(3.25rem, 9vw, 5.15rem);
+  font-size: clamp(2rem, 4.5dvh, 3.55rem);
   font-weight: 600;
-  line-height: 1;
+  line-height: .94;
 }
 
 .invite-copy h3 {
   margin: 0;
   color: var(--rose-deep);
   font-family: var(--serif);
-  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  font-size: clamp(1.65rem, 3.75dvh, 3.1rem);
   font-weight: 800;
-  letter-spacing: .02em;
-  line-height: 1;
+  letter-spacing: .025em;
+  line-height: .92;
 }
 
 .ceremony-year {
-  margin: 9px 0 0;
+  margin: clamp(2px, .35dvh, 4px) 0 0;
   color: var(--neu-blue);
   font-family: var(--serif);
-  font-size: clamp(1.15rem, 3vw, 1.55rem);
-  letter-spacing: .015em;
+  font-size: clamp(.72rem, 1.55dvh, 1.08rem);
 }
 
+/* ---------- Bottom event + portrait: stretches only inside remaining viewport ---------- */
 .event-composition {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, .9fr) 1px minmax(230px, 1.12fr);
-  gap: clamp(18px, 4vw, 34px);
-  align-items: end;
-  margin-top: 25px;
+  grid-template-columns: minmax(0, .92fr) 1px minmax(0, 1.12fr);
+  gap: clamp(8px, 2.1vw, 22px);
+  align-items: stretch;
+  min-height: 0;
+  margin-top: clamp(5px, .8dvh, 9px);
+  overflow: hidden;
 }
 
 .event-details {
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  align-self: center;
-  padding: 16px 0 10px;
+  justify-content: center;
+  gap: clamp(8px, 1.8dvh, 18px);
+  min-height: 0;
+  padding: 2px 0;
 }
 
 .detail-item {
   display: grid;
-  grid-template-columns: 42px 1fr;
-  gap: 10px;
+  grid-template-columns: clamp(24px, 3.8dvh, 34px) minmax(0, 1fr);
+  gap: clamp(4px, .9vw, 8px);
   align-items: start;
 }
 
 .detail-icon {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: clamp(24px, 3.8dvh, 34px);
+  height: clamp(24px, 3.8dvh, 34px);
   color: var(--neu-blue);
 }
-
 .detail-icon svg {
-  width: 32px;
-  height: 32px;
+  width: 85%;
+  height: 85%;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
@@ -705,281 +712,261 @@ a {
 
 .detail-item span {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   color: var(--neu-blue);
-  font-size: .75rem;
+  font-size: clamp(.48rem, .98dvh, .68rem);
   font-weight: 700;
   letter-spacing: .04em;
 }
 
 .detail-item strong,
 .detail-item b,
-.detail-item em {
-  display: block;
-  font-style: normal;
-}
-
+.detail-item em { display: block; font-style: normal; }
 .detail-item strong {
   color: var(--rose-deep);
-  font-size: clamp(.82rem, 2vw, 1rem);
+  font-size: clamp(.54rem, 1.16dvh, .80rem);
   font-weight: 700;
-  line-height: 1.38;
+  line-height: 1.28;
 }
-
 .detail-item b {
-  margin-top: 2px;
-  color: #42393d;
-  font-size: .72rem;
-  font-weight: 600;
-  line-height: 1.45;
-}
-
-.detail-item em {
   margin-top: 1px;
+  color: #443b3f;
+  font-size: clamp(.48rem, 1.02dvh, .69rem);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.detail-item em {
   color: var(--neu-blue);
-  font-size: .9rem;
+  font-size: clamp(.58rem, 1.22dvh, .84rem);
   font-weight: 700;
 }
-
 .detail-item p {
-  margin: 4px 0 0;
-  color: #62595d;
-  font-size: .7rem;
-  line-height: 1.55;
+  margin: 2px 0 0;
+  color: #655b60;
+  font-size: clamp(.46rem, .98dvh, .66rem);
+  line-height: 1.36;
 }
-
 .detail-item a {
   display: inline-block;
-  margin-top: 6px;
+  margin-top: 3px;
   color: var(--neu-blue);
-  font-size: .66rem;
+  font-size: clamp(.44rem, .9dvh, .61rem);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(22,63,120,.24);
+  border-bottom: 1px solid rgba(22,63,120,.22);
 }
 
 .event-axis {
   position: relative;
   width: 1px;
-  height: 255px;
+  height: 72%;
+  min-height: 110px;
+  max-height: 235px;
   align-self: center;
-  background: linear-gradient(180deg, transparent, rgba(22,63,120,.52) 15%, rgba(22,63,120,.52) 85%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(22,63,120,.48) 15%, rgba(22,63,120,.48) 85%, transparent);
 }
-
 .event-axis i {
   position: absolute;
   top: 52%;
   left: 50%;
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: var(--neu-blue);
-  box-shadow: 0 0 0 4px rgba(22,63,120,.08);
+  box-shadow: 0 0 0 3px rgba(22,63,120,.07);
 }
 
 .graduate-photo {
   position: relative;
-  align-self: end;
-  min-height: 360px;
-  margin: 0 -12px -7px 0;
-  overflow: visible;
+  align-self: stretch;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 46% 46% 12px 12px;
 }
 
 .graduate-photo__halo {
   position: absolute;
-  right: 2%;
-  bottom: 9%;
-  width: 92%;
-  height: 77%;
+  inset: 8% 2% 3%;
   border-radius: 48% 48% 18px 18px;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(255,255,255,.98), rgba(247,220,228,.67) 58%, rgba(245,222,228,0) 74%);
-  filter: blur(.2px);
+  background: radial-gradient(circle at 50% 38%, rgba(255,255,255,.98), rgba(247,220,228,.68) 58%, rgba(245,222,228,0) 77%);
 }
 
 .graduate-photo img {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 53% 71%;
-  border-radius: 46% 46% 9px 9px;
-  filter: saturate(.9) contrast(.98) brightness(1.02);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 84%, rgba(0,0,0,.78) 91%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 84%, rgba(0,0,0,.78) 91%, transparent 100%);
-  box-shadow: 0 18px 36px rgba(63,41,49,.13);
+  object-position: 52% 66%;
+  border-radius: inherit;
+  filter: saturate(.92) contrast(.98) brightness(1.02);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, rgba(0,0,0,.7) 95%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, rgba(0,0,0,.7) 95%, transparent 100%);
 }
 
 .graduate-photo figcaption {
   position: absolute;
-  right: 4px;
-  bottom: 7px;
+  right: 5px;
+  bottom: 4px;
   z-index: 2;
-  padding: 6px 10px;
+  max-width: calc(100% - 10px);
+  padding: 3px 7px;
+  overflow: hidden;
   border-radius: 999px;
   background: rgba(255,253,248,.82);
   backdrop-filter: blur(8px);
   color: var(--rose-dark);
   font-family: var(--script);
-  font-size: .98rem;
+  font-size: clamp(.56rem, 1.15dvh, .78rem);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
+/* ---------- Compact closing line ---------- */
 .invitation-footer {
   position: relative;
   z-index: 3;
   display: grid;
-  grid-template-columns: 92px 1fr 46px;
-  gap: 8px;
+  grid-template-columns: clamp(42px, 6.5dvh, 62px) 1fr clamp(25px, 4dvh, 38px);
+  gap: 4px;
   align-items: end;
-  margin: 14px -8px 0;
+  min-height: 0;
+  margin-top: clamp(2px, .5dvh, 5px);
   color: var(--neu-blue);
 }
 
 .invitation-footer::before {
   content: "";
   position: absolute;
-  left: 16%;
-  right: 9%;
-  top: -3px;
+  left: 14%;
+  right: 8%;
+  top: -1px;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(22,63,120,.14), transparent);
 }
 
 .diploma-art svg {
-  width: 88px;
+  display: block;
+  width: clamp(40px, 6.2dvh, 58px);
   fill: none;
   stroke: var(--neu-blue-soft);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: .72;
+  opacity: .66;
 }
 
 .invitation-footer p {
-  margin: 0 0 2px;
-  color: #5a6478;
+  margin: 0 0 1px;
+  color: #5d6679;
   font-family: var(--script);
-  font-size: clamp(1.05rem, 2.8vw, 1.48rem);
+  font-size: clamp(.68rem, 1.45dvh, 1.02rem);
   font-weight: 600;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.17;
 }
 
 .heart-mark {
   color: var(--rose);
   font-family: var(--script);
-  font-size: 3.2rem;
-  line-height: .9;
+  font-size: clamp(1.55rem, 3.5dvh, 2.5rem);
+  line-height: .75;
   transform: rotate(-10deg);
 }
 
-/* Open gate */
+/* ---------- Opening overlay ---------- */
 .open-gate {
   position: fixed;
   inset: 0;
   z-index: 120;
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  overflow: hidden;
   background:
-    radial-gradient(circle at center, rgba(255,250,249,.90), rgba(237,208,218,.97)),
+    radial-gradient(circle at center, rgba(255,250,249,.92), rgba(237,208,218,.98)),
     var(--canvas);
-  transition: opacity .65s ease, visibility .65s ease;
+  transition: opacity .62s ease, visibility .62s ease;
 }
-
 .open-gate::before,
 .open-gate::after {
   content: "";
   position: absolute;
   width: min(420px, 78vw);
   aspect-ratio: 1;
-  border: 1px solid rgba(144,61,83,.12);
+  border: 1px solid rgba(144,61,83,.11);
   border-radius: 50%;
 }
-
-.open-gate::before {
-  transform: translate(-44%, -38%);
-}
-
-.open-gate::after {
-  transform: translate(45%, 41%) scale(.72);
-}
-
-.open-gate.is-opened {
-  opacity: 0;
-  visibility: hidden;
-}
+.open-gate::before { transform: translate(-44%, -38%); }
+.open-gate::after { transform: translate(45%, 41%) scale(.72); }
+.open-gate.is-opened { opacity: 0; visibility: hidden; }
 
 .open-gate__card {
   position: relative;
   z-index: 2;
-  width: min(430px, 92vw);
-  padding: 42px 28px 30px;
+  width: min(420px, 92vw);
+  max-height: min(560px, 88dvh);
+  padding: clamp(24px, 4.7dvh, 42px) 26px clamp(20px, 3.5dvh, 30px);
+  overflow: hidden;
   border: 1px solid rgba(145,72,94,.16);
   border-radius: 24px;
-  background: rgba(255,253,248,.94);
+  background: rgba(255,253,248,.95);
   box-shadow: 0 24px 80px rgba(88,48,61,.16);
   text-align: center;
 }
-
 .open-gate__seal {
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 17px;
+  width: clamp(48px, 8dvh, 64px);
+  height: clamp(48px, 8dvh, 64px);
+  margin: 0 auto clamp(10px, 2dvh, 17px);
   border: 1px solid rgba(200,95,124,.45);
   border-radius: 50%;
   color: var(--rose-dark);
   background: var(--rose-pale);
   box-shadow: inset 0 0 0 6px rgba(255,255,255,.62);
 }
-
 .open-gate__seal svg {
-  width: 38px;
+  width: 60%;
   fill: none;
   stroke: currentColor;
   stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-
 .open-gate__card p {
   margin: 0;
   color: var(--neu-blue);
-  font-size: .72rem;
+  font-size: clamp(.58rem, 1.2dvh, .72rem);
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-
 .open-gate__card h1 {
-  margin: 9px 0 4px;
+  margin: clamp(5px, 1dvh, 9px) 0 3px;
   color: var(--rose-dark);
   font-family: var(--script);
-  font-size: 3rem;
+  font-size: clamp(2.25rem, 5.8dvh, 3rem);
   font-weight: 600;
   line-height: 1;
 }
-
 .open-gate__card strong {
   display: block;
   color: #342c30;
   font-family: var(--serif);
-  font-size: 1.25rem;
+  font-size: clamp(.95rem, 2.2dvh, 1.25rem);
 }
-
 .open-gate__card button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-width: 190px;
-  margin-top: 25px;
-  padding: 12px 20px;
+  gap: 9px;
+  min-width: 178px;
+  margin-top: clamp(14px, 3dvh, 25px);
+  padding: 11px 19px;
   border: 0;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--rose-dark), var(--rose));
@@ -988,29 +975,10 @@ a {
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease;
 }
+.open-gate__card button:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(143,52,77,.26); }
+.open-gate__card button svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.open-gate__card small { display: block; margin-top: 10px; color: #958187; font-size: clamp(.56rem, 1dvh, .67rem); }
 
-.open-gate__card button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(143,52,77,.26);
-}
-
-.open-gate__card button svg {
-  width: 19px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.open-gate__card small {
-  display: block;
-  margin-top: 12px;
-  color: #958187;
-  font-size: .67rem;
-}
-
-/* Invisible YouTube audio container */
 .youtube-audio {
   position: fixed;
   width: 1px;
@@ -1021,23 +989,17 @@ a {
   opacity: .001;
   pointer-events: none;
 }
-
-.youtube-audio iframe {
-  display: block;
-  width: 1px;
-  height: 1px;
-  border: 0;
-}
+.youtube-audio iframe { display: block; width: 1px; height: 1px; border: 0; }
 
 .music-toggle {
   position: fixed;
   z-index: 95;
-  top: max(14px, env(safe-area-inset-top));
-  right: max(14px, env(safe-area-inset-right));
+  top: max(10px, env(safe-area-inset-top));
+  right: max(10px, env(safe-area-inset-right));
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 11px;
+  gap: 7px;
+  padding: 7px 9px;
   border: 1px solid rgba(143,52,77,.18);
   border-radius: 999px;
   background: rgba(255,253,248,.86);
@@ -1046,210 +1008,163 @@ a {
   backdrop-filter: blur(12px);
   cursor: pointer;
 }
+.music-toggle__icon { display: flex; align-items: end; gap: 2px; width: 15px; height: 15px; }
+.music-toggle__icon i { width: 3px; height: 5px; border-radius: 99px; background: currentColor; }
+.music-toggle.is-playing .music-toggle__icon i:nth-child(1) { animation: musicBar .8s ease-in-out infinite alternate; }
+.music-toggle.is-playing .music-toggle__icon i:nth-child(2) { animation: musicBar .62s .12s ease-in-out infinite alternate; }
+.music-toggle.is-playing .music-toggle__icon i:nth-child(3) { animation: musicBar .74s .2s ease-in-out infinite alternate; }
+.music-toggle__label { font-size: .62rem; font-weight: 600; }
+@keyframes musicBar { from { height: 4px; } to { height: 14px; } }
 
-.music-toggle__icon {
-  display: flex;
-  align-items: end;
-  gap: 2px;
-  width: 16px;
-  height: 16px;
-}
-
-.music-toggle__icon i {
-  width: 3px;
-  height: 5px;
-  border-radius: 99px;
-  background: currentColor;
-}
-
-.music-toggle.is-playing .music-toggle__icon i:nth-child(1) {
-  animation: musicBar .8s ease-in-out infinite alternate;
-}
-
-.music-toggle.is-playing .music-toggle__icon i:nth-child(2) {
-  animation: musicBar .62s .12s ease-in-out infinite alternate;
-}
-
-.music-toggle.is-playing .music-toggle__icon i:nth-child(3) {
-  animation: musicBar .74s .2s ease-in-out infinite alternate;
-}
-
-.music-toggle__label {
-  font-size: .67rem;
-  font-weight: 600;
-}
-
-@keyframes musicBar {
-  from { height: 4px; }
-  to { height: 15px; }
-}
-
-/* Basic reveal motion */
+/* Opening animation only; không dùng scroll reveal nữa vì trang không cuộn */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);
+  transform: translateY(10px);
+  transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1);
 }
+.reveal--delay-1 { transition-delay: .07s; }
+.reveal--delay-2 { transition-delay: .13s; }
+.reveal--delay-3 { transition-delay: .18s; }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-.reveal--delay-1 { transition-delay: .08s; }
-.reveal--delay-2 { transition-delay: .15s; }
-.reveal--delay-3 { transition-delay: .22s; }
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (max-width: 640px) {
-  .site-shell {
-    padding: 8px 6px 28px;
-  }
-
+/* ---------- Portrait phones ---------- */
+@media (max-width: 520px) and (orientation: portrait) {
   .invitation-paper {
-    min-height: 0;
-    padding: 34px 22px 22px;
-    border-radius: 3px 3px 24px 3px;
+    width: calc(100vw - 12px);
+    height: calc(100dvh - 12px);
+    padding: clamp(12px, 1.8dvh, 17px) clamp(14px, 4.3vw, 19px) clamp(8px, 1.3dvh, 12px);
+    border-radius: 17px;
   }
 
-  .invitation-paper::after {
-    inset: 8px;
-  }
+  .invitation-paper::before { inset: 6px; border-radius: 13px; }
+  .paper-botanical { width: 42%; opacity: .105; }
 
-  .paper-botanical {
-    width: 170px;
-    opacity: .12;
-  }
+  .academic-mark__cap { width: clamp(22px, 3.4dvh, 28px); height: clamp(22px, 3.4dvh, 28px); }
+  .academic-mark strong { font-size: clamp(.98rem, 2.15dvh, 1.25rem); }
+  .university-heading h2 { font-size: clamp(.62rem, 1.28dvh, .78rem); }
+  .university-heading p { font-size: clamp(.45rem, .9dvh, .56rem); }
+  .class-line { font-size: clamp(.38rem, .72dvh, .46rem); }
 
-  .paper-botanical--left {
-    left: -76px;
-  }
-
-  .paper-botanical--right {
-    right: -76px;
-  }
-
-  .invite-copy {
-    margin-top: 22px;
-  }
+  .invite-copy { margin-top: clamp(3px, .7dvh, 6px); }
+  .invite-copy h1 { font-size: clamp(2.15rem, 5dvh, 3rem); }
+  .cap-divider { margin-block: 2px 4px; }
+  .formal-line { font-size: clamp(.54rem, 1.08dvh, .68rem); }
+  .guest-name { font-size: clamp(1.12rem, 2.35dvh, 1.45rem); }
+  .graduate-script { font-size: clamp(1.8rem, 3.8dvh, 2.45rem); }
+  .invite-copy h3 { font-size: clamp(1.45rem, 3.2dvh, 2rem); }
+  .ceremony-year { font-size: clamp(.65rem, 1.3dvh, .82rem); margin-top: 1px; }
 
   .event-composition {
-    grid-template-columns: minmax(0, .82fr) 1px minmax(145px, 1.02fr);
-    gap: 13px;
-    margin-top: 18px;
+    grid-template-columns: minmax(0, .92fr) 1px minmax(0, 1.08fr);
+    gap: clamp(6px, 2.2vw, 10px);
+    margin-top: clamp(3px, .55dvh, 5px);
   }
 
-  .event-details {
-    gap: 20px;
-    padding-top: 4px;
-  }
-
-  .detail-item {
-    grid-template-columns: 30px 1fr;
-    gap: 6px;
-  }
-
-  .detail-icon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .detail-icon svg {
-    width: 25px;
-    height: 25px;
-  }
-
-  .detail-item span {
-    font-size: .61rem;
-  }
-
-  .detail-item strong {
-    font-size: .66rem;
-  }
-
-  .detail-item b,
-  .detail-item p,
-  .detail-item a {
-    font-size: .56rem;
-  }
-
-  .detail-item em {
-    font-size: .72rem;
-  }
-
-  .event-axis {
-    height: 190px;
-  }
-
-  .graduate-photo {
-    min-height: 250px;
-    margin-right: -8px;
-  }
-
-  .graduate-photo figcaption {
-    right: 0;
-    bottom: 3px;
-    padding: 4px 7px;
-    font-size: .72rem;
-  }
+  .event-details { gap: clamp(6px, 1.35dvh, 10px); }
+  .detail-item { grid-template-columns: 24px minmax(0,1fr); gap: 4px; }
+  .detail-icon { width: 24px; height: 24px; }
+  .detail-item span { font-size: clamp(.43rem, .83dvh, .52rem); }
+  .detail-item strong { font-size: clamp(.48rem, .95dvh, .60rem); }
+  .detail-item b { font-size: clamp(.43rem, .86dvh, .54rem); }
+  .detail-item em { font-size: clamp(.52rem, 1.02dvh, .65rem); }
+  .detail-item p, .detail-item a { font-size: clamp(.40rem, .78dvh, .49rem); }
+  .event-axis { min-height: 85px; }
+  .graduate-photo { border-radius: 44% 44% 9px 9px; }
+  .graduate-photo img { object-position: 53% 66%; }
+  .graduate-photo figcaption { display: none; }
 
   .invitation-footer {
-    grid-template-columns: 58px 1fr 30px;
-    gap: 3px;
-    margin-top: 10px;
+    grid-template-columns: 34px 1fr 24px;
+    gap: 2px;
+    margin-top: 1px;
   }
+  .diploma-art svg { width: 34px; }
+  .invitation-footer p { font-size: clamp(.58rem, 1.15dvh, .72rem); }
+  .heart-mark { font-size: 1.45rem; }
 
-  .diploma-art svg {
-    width: 57px;
-  }
-
-  .invitation-footer p {
-    font-size: .91rem;
-  }
-
-  .heart-mark {
-    font-size: 2.35rem;
-  }
-
-  .music-toggle {
-    top: 9px;
-    right: 9px;
-    padding: 7px 9px;
-  }
-
-  .music-toggle__label {
-    display: none;
-  }
+  .music-toggle { top: 7px; right: 7px; padding: 6px 8px; }
+  .music-toggle__label { display: none; }
 }
 
-@media (max-width: 390px) {
+/* Very narrow / short portrait phones */
+@media (max-width: 380px) and (orientation: portrait), (max-height: 690px) and (orientation: portrait) {
+  .invitation-paper { padding-top: 10px; padding-bottom: 7px; }
+  .university-heading p { display: none; }
+  .class-line { margin-top: 1px; }
+  .invite-copy h1 { font-size: clamp(2rem, 4.7dvh, 2.55rem); }
+  .cap-divider { margin-block: 1px 2px; }
+  .graduate-script { font-size: clamp(1.65rem, 3.45dvh, 2.05rem); }
+  .invite-copy h3 { font-size: clamp(1.35rem, 2.9dvh, 1.75rem); }
+  .event-details { gap: 4px; }
+  .detail-item p br { display: none; }
+  .invitation-footer p br { display: none; }
+}
+
+/* ---------- Landscape phones / short desktop windows ---------- */
+@media (orientation: landscape) and (max-height: 600px) {
+  .site-shell { padding: 6px; }
+
   .invitation-paper {
-    padding-inline: 18px;
+    grid-template-columns: minmax(250px, .78fr) minmax(330px, 1.22fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    column-gap: clamp(16px, 3vw, 34px);
+    width: min(1120px, calc(100vw - 12px));
+    height: calc(100dvh - 12px);
+    padding: 12px clamp(18px, 3vw, 34px) 9px;
   }
 
-  .class-line {
-    letter-spacing: .11em;
-  }
+  .university-heading { grid-column: 1; grid-row: 1; align-self: start; }
+  .invite-copy { grid-column: 1; grid-row: 2; align-self: center; margin-top: 1px; }
+  .event-composition { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; min-height: 0; }
+  .invitation-footer { grid-column: 1 / -1; grid-row: 3; }
 
-  .event-composition {
-    grid-template-columns: minmax(0, .86fr) 1px minmax(132px, 1fr);
-    gap: 9px;
-  }
+  .academic-mark__cap { width: 24px; height: 24px; }
+  .academic-mark strong { font-size: 1.05rem; }
+  .university-heading h2 { font-size: .64rem; }
+  .university-heading p { font-size: .46rem; }
+  .class-line { font-size: .39rem; margin-top: 2px; }
 
-  .graduate-photo {
-    min-height: 225px;
-  }
+  .invite-copy h1 { font-size: clamp(2.15rem, 9dvh, 3rem); }
+  .cap-divider { margin: 2px auto 4px; }
+  .formal-line { font-size: clamp(.52rem, 2.1dvh, .68rem); }
+  .guest-name { font-size: clamp(1.1rem, 4dvh, 1.45rem); }
+  .graduate-script { font-size: clamp(1.75rem, 7dvh, 2.45rem); }
+  .invite-copy h3 { font-size: clamp(1.35rem, 5.7dvh, 2rem); }
+  .ceremony-year { font-size: .68rem; margin-top: 1px; }
+
+  .event-composition { grid-template-columns: minmax(150px,.84fr) 1px minmax(190px,1.1fr); gap: 11px; }
+  .event-details { gap: clamp(7px, 2.3dvh, 11px); }
+  .detail-item { grid-template-columns: 25px 1fr; gap: 4px; }
+  .detail-icon { width: 25px; height: 25px; }
+  .detail-item span { font-size: .45rem; }
+  .detail-item strong { font-size: .51rem; }
+  .detail-item b { font-size: .45rem; }
+  .detail-item em { font-size: .55rem; }
+  .detail-item p, .detail-item a { font-size: .42rem; }
+  .event-axis { min-height: 100px; max-height: 185px; }
+  .graduate-photo { border-radius: 40% 40% 10px 10px; }
+  .graduate-photo figcaption { display: none; }
+
+  .invitation-footer { grid-template-columns: 38px 1fr 24px; margin-top: 0; }
+  .diploma-art svg { width: 38px; }
+  .invitation-footer p { font-size: .62rem; }
+  .heart-mark { font-size: 1.55rem; }
+}
+
+/* Compact desktop heights like 1366×768 */
+@media (min-width: 521px) and (min-height: 601px) and (max-height: 780px) {
+  .invitation-paper { width: min(560px, 94vw, calc((100dvh - 14px) * .76)); }
+  .university-heading p { font-size: .54rem; }
+  .event-details { gap: 9px; }
+  .invitation-footer p { font-size: .72rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-
-  .sakura-falling {
-    display: none;
-  }
+  .sakura-falling { display: none; }
 }
