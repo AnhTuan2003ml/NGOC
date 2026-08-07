@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3dbe3">
+  <meta name="description" content="Thư mời tham dự lễ tốt nghiệp của Nguyễn Thị Bích Ngọc tại Đại học Kinh tế Quốc dân.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Thiệp mời lễ tốt nghiệp | Nguyễn Thị Bích Ngọc">
+  <meta property="og:description" content="Trân trọng kính mời bạn tới tham dự lễ tốt nghiệp cùng Nguyễn Thị Bích Ngọc.">
+  <meta property="og:image" content="./assets/img/NGOC.jpg">
+  <title>Thiệp mời lễ tốt nghiệp | Nguyễn Thị Bích Ngọc</title>
+
+  <link rel="icon" href="./favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="is-locked">
+  <!-- Giữ hiệu ứng hoa/lá rơi từ template gốc -->
+  <div class="sakura-falling" aria-hidden="true"></div>
+
+  <!-- Màn mở thiệp: thao tác này cho phép trình duyệt phát nhạc YouTube có âm thanh -->
+  <div class="open-gate" id="open-gate" role="dialog" aria-modal="true" aria-labelledby="open-gate-title">
+    <div class="open-gate__card">
+      <div class="open-gate__seal" aria-hidden="true">
+        <svg viewBox="0 0 64 64">
+          <path d="M8 25 32 13l24 12-24 12L8 25Z"/>
+          <path d="M18 31v10c0 5 7 10 14 10s14-5 14-10V31"/>
+          <path d="M56 25v15"/>
+        </svg>
+      </div>
+      <p>Đại học Kinh tế Quốc dân</p>
+      <h1 id="open-gate-title">Thiệp mời lễ tốt nghiệp</h1>
+      <strong>Nguyễn Thị Bích Ngọc</strong>
+      <button id="open-invitation" type="button">
+        <span>Mở thiệp mời</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M14 7l5 5-5 5"/></svg>
+      </button>
+      <small>Chạm để mở thiệp và phát nhạc nền</small>
+    </div>
+  </div>
+
+  <button class="music-toggle" id="music-toggle" type="button" aria-label="Tắt nhạc" aria-pressed="true">
+    <span class="music-toggle__icon" aria-hidden="true">
+      <i></i><i></i><i></i>
+    </span>
+    <span class="music-toggle__label">Nhạc</span>
+  </button>
+
+  <!-- YouTube chạy nền, không hiển thị player -->
+  <div class="youtube-audio" id="youtube-audio" aria-hidden="true"></div>
+
+  <main class="site-shell">
+    <article class="invitation-paper" id="invitation">
+      <svg class="paper-botanical paper-botanical--left" viewBox="0 0 250 440" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M72 426C93 358 71 320 94 255c19-55 58-94 100-142"/>
+          <path d="M92 338c-31-18-43-49-38-78 27 12 46 36 38 78Z"/>
+          <path d="M100 297c24-28 49-38 77-34-8 27-31 47-77 34Z"/>
+          <path d="M119 241c-25-22-31-48-21-72 24 12 39 38 21 72Z"/>
+          <path d="M136 208c26-24 52-30 78-22-12 26-38 41-78 22Z"/>
+          <path d="M158 166c-17-28-16-53-1-74 22 17 31 45 1 74Z"/>
+          <path d="M181 129c25-18 48-20 69-8-14 22-39 31-69 8Z"/>
+        </g>
+      </svg>
+      <svg class="paper-botanical paper-botanical--right" viewBox="0 0 250 440" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M178 427c-21-68 1-106-22-171-19-55-58-94-100-142"/>
+          <path d="M158 338c31-18 43-49 38-78-27 12-46 36-38 78Z"/>
+          <path d="M150 297c-24-28-49-38-77-34 8 27 31 47 77 34Z"/>
+          <path d="M131 241c25-22 31-48 21-72-24 12-39 38-21 72Z"/>
+          <path d="M114 208c-26-24-52-30-78-22 12 26 38 41 78 22Z"/>
+          <path d="M92 166c17-28 16-53 1-74-22 17-31 45-1 74Z"/>
+          <path d="M69 129c-25-18-48-20-69-8 14 22 39 31 69 8Z"/>
+        </g>
+      </svg>
+
+      <header class="university-heading reveal">
+        <div class="academic-mark" aria-hidden="true">
+          <span class="academic-mark__cap">
+            <svg viewBox="0 0 64 64"><path d="M7 25 32 13l25 12-25 12L7 25Z"/><path d="M18 31v10c0 5 7 10 14 10s14-5 14-10V31"/><path d="M57 25v16"/></svg>
+          </span>
+          <strong>NEU</strong>
+        </div>
+        <h2>ĐẠI HỌC KINH TẾ QUỐC DÂN</h2>
+        <p>National Economics University</p>
+        <span class="class-line">GRADUATION • CLASS OF 2026</span>
+      </header>
+
+      <section class="invite-copy reveal reveal--delay-1">
+        <h1>Thiệp mời</h1>
+        <div class="cap-divider" aria-hidden="true">
+          <span></span>
+          <svg viewBox="0 0 64 64"><path d="M7 25 32 13l25 12-25 12L7 25Z"/><path d="M18 31v10c0 5 7 10 14 10s14-5 14-10V31"/><path d="M57 25v16"/></svg>
+          <span></span>
+        </div>
+        <p class="formal-line">Trân trọng kính mời</p>
+        <p class="guest-name">Bạn</p>
+        <div class="guest-rule"></div>
+        <p class="formal-line formal-line--second">Tới tham dự Lễ tốt nghiệp cùng</p>
+        <p class="graduate-script">Nguyễn Thị Bích Ngọc</p>
+        <h3>GRADUATION</h3>
+        <p class="ceremony-year">Ceremony 2026</p>
+      </section>
+
+      <section class="event-composition reveal reveal--delay-2">
+        <div class="event-details">
+          <div class="detail-item">
+            <div class="detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <div>
+              <span>THỜI GIAN</span>
+              <strong id="event-time">ĐANG CẬP NHẬT</strong>
+              <b id="event-day">LỊCH LỄ TỐT NGHIỆP</b>
+              <em id="event-date">NĂM 2026</em>
+            </div>
+          </div>
+
+          <div class="detail-item detail-item--place">
+            <div class="detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 21s7-5 7-12a7 7 0 1 0-14 0c0 7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.3"/></svg>
+            </div>
+            <div>
+              <span>ĐỊA ĐIỂM</span>
+              <strong>ĐẠI HỌC KINH TẾ QUỐC DÂN</strong>
+              <p>207 Giải Phóng, Bạch Mai,<br>Hà Nội</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=%C4%90%E1%BA%A1i+h%E1%BB%8Dc+Kinh+t%E1%BA%BF+Qu%E1%BB%91c+d%C3%A2n+207+Gi%E1%BA%A3i+Ph%C3%B3ng+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener">Xem bản đồ →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-axis" aria-hidden="true"><i></i></div>
+
+        <figure class="graduate-photo">
+          <div class="graduate-photo__halo" aria-hidden="true"></div>
+          <img src="./assets/img/NGOC.jpg" alt="Nguyễn Thị Bích Ngọc" fetchpriority="high">
+          <figcaption>Nguyễn Thị Bích Ngọc</figcaption>
+        </figure>
+      </section>
+
+      <footer class="invitation-footer reveal reveal--delay-3">
+        <div class="diploma-art" aria-hidden="true">
+          <svg viewBox="0 0 150 110">
+            <path d="M12 48 50 28l38 20-38 20-38-20Z"/>
+            <path d="M28 56v17c0 8 10 15 22 15s22-7 22-15V56"/>
+            <path d="M88 48v28"/>
+            <path d="M70 89c19-8 39-7 58 2"/>
+            <path d="M74 95c20-6 37-4 55 4"/>
+            <circle cx="114" cy="83" r="9"/>
+            <path d="m108 91-4 12 10-6 8 8 1-14"/>
+          </svg>
+        </div>
+        <p>Sự hiện diện của bạn sẽ là niềm vui và<br>kỷ niệm đáng nhớ trong ngày đặc biệt này!</p>
+        <div class="heart-mark" aria-hidden="true">♡</div>
+      </footer>
+    </article>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/timoschaefer/jQuery-Sakura/jquery-sakura.min.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+</html>
