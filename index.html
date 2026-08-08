@@ -34,6 +34,19 @@
       <p>Đại học Kinh tế Quốc dân</p>
       <h1 id="open-gate-title">Thiệp mời lễ tốt nghiệp</h1>
       <strong>Nguyễn Thị Bích Ngọc</strong>
+
+      <label class="guest-input" for="guest-name-input">
+        <span>Gửi đến bạn:</span>
+        <input
+          id="guest-name-input"
+          type="text"
+          maxlength="50"
+          autocomplete="name"
+          placeholder="Nhập tên người nhận"
+          aria-label="Tên người nhận thiệp"
+        >
+      </label>
+
       <button id="open-invitation" type="button">
         <span>Mở thiệp mời</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M14 7l5 5-5 5"/></svg>
@@ -97,7 +110,7 @@
           <span></span>
         </div>
         <p class="formal-line">Trân trọng kính mời</p>
-        <p class="guest-name">Bạn</p>
+        <p class="guest-name" id="invitation-guest-name">Bạn</p>
         <div class="guest-rule"></div>
         <p class="formal-line formal-line--second">Tới tham dự Lễ tốt nghiệp cùng</p>
         <p class="graduate-script">Nguyễn Thị Bích Ngọc</p>

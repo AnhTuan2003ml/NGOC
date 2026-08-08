@@ -14,6 +14,8 @@ const EVENT_CONFIG = {
 
 const gate = document.getElementById("open-gate");
 const openButton = document.getElementById("open-invitation");
+const guestNameInput = document.getElementById("guest-name-input");
+const invitationGuestName = document.getElementById("invitation-guest-name");
 const musicToggle = document.getElementById("music-toggle");
 const youtubeAudio = document.getElementById("youtube-audio");
 
@@ -137,7 +139,15 @@ function toggleMusic() {
   updateMusicButton();
 }
 
+function applyGuestName() {
+  if (!invitationGuestName) return;
+
+  const guestName = guestNameInput?.value.trim().replace(/\s+/g, " ") || "Bạn";
+  invitationGuestName.textContent = guestName;
+}
+
 function openInvitation() {
+  applyGuestName();
   gate.classList.add("is-opened");
   document.body.classList.remove("is-locked");
   document.body.classList.add("invitation-open");
@@ -169,7 +179,10 @@ openButton.addEventListener("click", openInvitation);
 musicToggle.addEventListener("click", toggleMusic);
 
 window.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" && !gate.hidden) openInvitation();
+  if (event.key !== "Enter" || gate.hidden) return;
+
+  event.preventDefault();
+  openInvitation();
 });
 
 window.addEventListener("resize", refreshSakuraDensity, { passive: true });

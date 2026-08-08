@@ -1018,13 +1018,54 @@ a { color: inherit; }
   font-family: var(--serif);
   font-size: clamp(.95rem, 2.2dvh, 1.25rem);
 }
+
+.guest-input {
+  display: grid;
+  gap: 6px;
+  width: min(292px, 100%);
+  margin: clamp(13px, 2.2dvh, 18px) auto 0;
+  text-align: left;
+}
+
+.guest-input span {
+  color: #7d5b66;
+  font-size: clamp(.66rem, 1.25dvh, .78rem);
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
+.guest-input input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid rgba(169, 73, 99, .28);
+  border-radius: 999px;
+  outline: none;
+  background: rgba(255, 255, 255, .82);
+  color: #342c30;
+  font: 600 clamp(.84rem, 1.7dvh, 1rem)/1.2 var(--serif);
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72);
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.guest-input input::placeholder {
+  color: #b69da5;
+  font-weight: 400;
+}
+
+.guest-input input:focus {
+  border-color: rgba(169, 73, 99, .58);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(187, 75, 106, .09);
+}
 .open-gate__card button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
   min-width: 178px;
-  margin-top: clamp(14px, 3dvh, 25px);
+  margin-top: clamp(12px, 2.2dvh, 18px);
   padding: 11px 19px;
   border: 0;
   border-radius: 999px;
@@ -1140,6 +1181,13 @@ a { color: inherit; }
   .diploma-art svg { width: 34px; }
   .invitation-footer p { font-size: clamp(.58rem, 1.15dvh, .72rem); }
   .heart-mark { font-size: 1.45rem; }
+
+  .guest-input {
+    width: min(270px, 100%);
+    margin-top: 11px;
+    gap: 4px;
+  }
+  .guest-input input { min-height: 39px; padding: 8px 12px; }
 
   .music-toggle { top: 7px; right: 7px; padding: 6px 8px; }
   .music-toggle__label { display: none; }
