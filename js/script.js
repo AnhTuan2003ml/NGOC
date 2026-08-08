@@ -6,9 +6,9 @@
  */
 
 const EVENT_CONFIG = {
-  time: "ĐANG CẬP NHẬT",
-  day: "LỊCH LỄ TỐT NGHIỆP",
-  date: "NĂM 2026",
+  time: "08:15 SÁNG",
+  day: "22-08-2026",
+  date: "THỨ BẢY, 22-08-2026",
   youtubeVideoId: "jLRQfIxxeU4"
 };
 
@@ -188,6 +188,29 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("resize", refreshSakuraDensity, { passive: true });
 
 applyEventConfig();
+
+const COUNTDOWN_TARGET = new Date(2026, 7, 22, 8, 15, 0);
+const countdownElements = {
+  days: document.getElementById("cd-days"),
+  hours: document.getElementById("cd-hours"),
+  minutes: document.getElementById("cd-minutes"),
+  seconds: document.getElementById("cd-seconds"),
+};
+
+function pad(value) {
+  return String(value).padStart(2, "0");
+}
+
+function updateCountdown() {
+  const diff = Math.max(0, COUNTDOWN_TARGET.getTime() - Date.now());
+  countdownElements.days.textContent = pad(Math.floor(diff / 86400000));
+  countdownElements.hours.textContent = pad(Math.floor(diff / 3600000) % 24);
+  countdownElements.minutes.textContent = pad(Math.floor(diff / 60000) % 60);
+  countdownElements.seconds.textContent = pad(Math.floor(diff / 1000) % 60);
+}
+
+updateCountdown();
+window.setInterval(updateCountdown, 1000);
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", startOriginalSakuraEffect, { once: true });

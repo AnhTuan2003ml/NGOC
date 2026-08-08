@@ -815,6 +815,44 @@ a { color: inherit; }
   border-bottom: 1px solid rgba(22,63,120,.22);
 }
 
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: clamp(3px, .5dvh, 6px);
+  margin-left: clamp(24px, 3.8dvh, 34px);
+}
+
+.countdown__block {
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+  padding: clamp(3px, .7dvh, 6px) clamp(5px, 1dvh, 10px);
+  border-radius: 8px;
+  background: rgba(23, 63, 120, .07);
+}
+
+.countdown__num {
+  color: var(--rose-deep);
+  font-size: clamp(.78rem, 1.6dvh, 1.15rem);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown__block small {
+  color: var(--neu-blue);
+  font-size: clamp(.32rem, .6dvh, .46rem);
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+
+.countdown__sep {
+  color: var(--rose-deep);
+  font-size: clamp(.6rem, 1.2dvh, .9rem);
+  font-style: normal;
+  font-weight: 700;
+}
+
 .event-axis {
   position: relative;
   width: 1px;
