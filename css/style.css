@@ -436,6 +436,65 @@ a { color: inherit; }
   opacity: .70;
 }
 
+/* Native sakura engine: không phụ thuộc jQuery/CDN, chạy ổn định desktop + mobile. */
+.sakura-petal {
+  --fall-duration: 12s;
+  --fall-delay: 0s;
+  --drift-x: 60px;
+  --drift-mid: 22px;
+  --drift-back: -13px;
+  --rot-1: 300deg;
+  --rot-2: 600deg;
+  --rot-3: 900deg;
+  --petal-opacity: .72;
+  position: absolute;
+  top: -12vh;
+  z-index: 81;
+  display: block;
+  pointer-events: none;
+  opacity: var(--petal-opacity);
+  border-radius: 78% 16% 72% 28%;
+  background:
+    radial-gradient(circle at 28% 28%, rgba(255, 255, 255, .92) 0 10%, transparent 29%),
+    linear-gradient(135deg, #fff0f5 0%, #f4afc1 42%, #d96d8d 72%, #fff7fa 100%);
+  box-shadow: 0 1px 3px rgba(126, 44, 70, .14);
+  transform-origin: 70% 70%;
+  will-change: transform, opacity;
+  animation: sakuraNativeFall var(--fall-duration) linear infinite;
+  animation-delay: var(--fall-delay);
+}
+
+.sakura-petal:nth-child(3n) {
+  border-radius: 100% 0 100% 0;
+}
+
+.sakura-petal:nth-child(4n) {
+  filter: blur(.15px);
+}
+
+@keyframes sakuraNativeFall {
+  0% {
+    transform: translate3d(0, -8vh, 0) rotate(0deg) rotateX(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--petal-opacity);
+  }
+  35% {
+    transform: translate3d(var(--drift-mid), 34vh, 0) rotate(var(--rot-1)) rotateX(110deg);
+  }
+  68% {
+    transform: translate3d(var(--drift-back), 72vh, 0) rotate(var(--rot-2)) rotateX(220deg);
+  }
+  92% {
+    opacity: var(--petal-opacity);
+  }
+  100% {
+    transform: translate3d(var(--drift-x), 116vh, 0) rotate(var(--rot-3)) rotateX(360deg);
+    opacity: 0;
+  }
+}
+
 .site-shell {
   position: relative;
   z-index: 2;
@@ -1166,5 +1225,10 @@ a { color: inherit; }
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-  .sakura-falling { display: none; }
+
+  /* Giữ hoa rơi hoạt động trên desktop ngay cả khi Windows bật Reduce motion. */
+  .sakura-petal {
+    animation-duration: var(--fall-duration) !important;
+    animation-iteration-count: infinite !important;
+  }
 }

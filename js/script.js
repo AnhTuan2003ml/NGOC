@@ -26,10 +26,62 @@ function applyEventConfig() {
   document.getElementById("event-date").textContent = EVENT_CONFIG.date;
 }
 
+let sakuraResizeTimer = null;
+
+function getSakuraPetalCount() {
+  const width = window.innerWidth;
+
+  if (width >= 1440) return 42;
+  if (width >= 1024) return 34;
+  if (width >= 768) return 26;
+  return 18;
+}
+
+function createSakuraPetal(index, total) {
+  const petal = document.createElement("span");
+  const size = 8 + Math.random() * 9;
+  const duration = 8.5 + Math.random() * 7;
+  const drift = -140 + Math.random() * 280;
+  const rotation = 1.5 + Math.random() * 3.5;
+  const delay = (duration / total) * index + Math.random() * 1.5;
+
+  petal.className = "sakura-petal";
+  petal.style.left = `${Math.random() * 100}vw`;
+  petal.style.width = `${size}px`;
+  petal.style.height = `${size * (0.68 + Math.random() * 0.30)}px`;
+  petal.style.setProperty("--fall-duration", `${duration.toFixed(2)}s`);
+  petal.style.setProperty("--drift-x", `${drift.toFixed(1)}px`);
+  petal.style.setProperty("--drift-mid", `${(drift * 0.38).toFixed(1)}px`);
+  petal.style.setProperty("--drift-back", `${(drift * -0.22).toFixed(1)}px`);
+  petal.style.setProperty("--rot-1", `${(120 * rotation).toFixed(1)}deg`);
+  petal.style.setProperty("--rot-2", `${(240 * rotation).toFixed(1)}deg`);
+  petal.style.setProperty("--rot-3", `${(360 * rotation).toFixed(1)}deg`);
+  petal.style.setProperty("--fall-delay", `-${delay.toFixed(2)}s`);
+  petal.style.setProperty("--petal-opacity", (0.55 + Math.random() * 0.35).toFixed(2));
+
+  return petal;
+}
+
 function startOriginalSakuraEffect() {
-  if (window.jQuery && typeof window.jQuery.fn.sakura === "function") {
-    window.jQuery(".sakura-falling").sakura();
+  const container = document.querySelector(".sakura-falling");
+  if (!container) return;
+
+  const count = getSakuraPetalCount();
+  const fragment = document.createDocumentFragment();
+
+  container.replaceChildren();
+
+  for (let index = 0; index < count; index += 1) {
+    fragment.appendChild(createSakuraPetal(index, count));
   }
+
+  container.appendChild(fragment);
+  container.dataset.sakuraReady = "true";
+}
+
+function refreshSakuraDensity() {
+  window.clearTimeout(sakuraResizeTimer);
+  sakuraResizeTimer = window.setTimeout(startOriginalSakuraEffect, 180);
 }
 
 function createYoutubeAudio() {
@@ -119,6 +171,8 @@ musicToggle.addEventListener("click", toggleMusic);
 window.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && !gate.hidden) openInvitation();
 });
+
+window.addEventListener("resize", refreshSakuraDensity, { passive: true });
 
 applyEventConfig();
 
