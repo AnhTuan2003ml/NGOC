@@ -29,18 +29,55 @@ function applyEventConfig() {
  * sửa lại sau khi người dùng kéo màn. Đồng bộ chiều cao thật vào --vh để thiệp
  * luôn khít viewport ngay từ đầu.
  */
+function isTextInputFocused() {
+  const element = document.activeElement;
+  return !!element && (element.tagName === "INPUT" || element.tagName === "TEXTAREA");
+}
+
+let committedViewportHeight = 0;
+let keyboardClosingUntil = 0;
+
 function syncViewportHeight() {
+  // Khi bàn phím ảo đang mở (ô nhập tên đang focus), WebView co innerHeight lại;
+  // không ghi giá trị đó vào --vh, nếu không thiệp sẽ bị thu nhỏ vĩnh viễn.
+  if (isTextInputFocused()) return;
+
   const height = window.innerHeight;
   if (!height) return;
+
+  // Vừa rời ô nhập: bàn phím còn đang đóng (có animation), viewport tạm thời
+  // vẫn nhỏ. Bỏ qua giá trị nhỏ hơn trong ~1s; các lần đo sau sẽ chốt giá trị đúng.
+  if (Date.now() < keyboardClosingUntil && height < committedViewportHeight) return;
+
+  committedViewportHeight = height;
   document.documentElement.style.setProperty("--vh", `${Math.round(height)}px`);
 }
 
+/* Đo lại vài lần vì bàn phím đóng / toolbar WebView co giãn có animation. */
+function scheduleViewportSync() {
+  [60, 300, 700, 1200].forEach((delay) => window.setTimeout(syncViewportHeight, delay));
+}
+
+function onGuestInputBlur() {
+  keyboardClosingUntil = Date.now() + 1000;
+  scheduleViewportSync();
+}
+
+/* Rời ô nhập chủ động (bấm "Mở thiệp mời"): đặt khoá trước khi blur để không
+   phụ thuộc vào việc WebView có phát sự kiện blur hay không. */
+function releaseGuestInput() {
+  keyboardClosingUntil = Date.now() + 1000;
+  guestNameInput?.blur();
+  scheduleViewportSync();
+}
+
 syncViewportHeight();
+scheduleViewportSync();
 window.addEventListener("resize", syncViewportHeight, { passive: true });
-window.addEventListener("orientationchange", syncViewportHeight, { passive: true });
-window.addEventListener("pageshow", syncViewportHeight, { passive: true });
-window.setTimeout(syncViewportHeight, 300);
-window.setTimeout(syncViewportHeight, 1200);
+window.addEventListener("orientationchange", scheduleViewportSync, { passive: true });
+window.addEventListener("pageshow", scheduleViewportSync, { passive: true });
+window.visualViewport?.addEventListener("resize", syncViewportHeight, { passive: true });
+guestNameInput?.addEventListener("blur", onGuestInputBlur);
 
 let sakuraResizeTimer = null;
 
@@ -173,7 +210,7 @@ function applyGuestName() {
 }
 
 function openInvitation() {
-  syncViewportHeight();
+  releaseGuestInput();
   applyGuestName();
   gate.classList.add("is-opened");
   document.body.classList.remove("is-locked");
