@@ -15,13 +15,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css?v=20260907-2">
+  <link rel="stylesheet" href="./css/style.css?v=20260907-4">
 </head>
 <body class="is-locked">
-  <!-- Giữ hiệu ứng hoa/lá rơi từ template gốc -->
+  <!-- Lá thu vàng rơi -->
   <div class="sakura-falling" aria-hidden="true"></div>
 
-  <!-- Màn mở thiệp: thao tác này cho phép trình duyệt phát nhạc YouTube có âm thanh -->
+  <!-- Phát nhạc sau thao tác mở thiệp -->
   <div class="open-gate" id="open-gate" role="dialog" aria-modal="true" aria-labelledby="open-gate-title">
     <div class="open-gate__card">
       <div class="open-gate__seal">
@@ -51,15 +51,14 @@
     </div>
   </div>
 
-  <button class="music-toggle" id="music-toggle" type="button" aria-label="Tắt nhạc" aria-pressed="true">
+  <button class="music-toggle" id="music-toggle" type="button" aria-label="Bật nhạc" aria-pressed="false">
     <span class="music-toggle__icon" aria-hidden="true">
       <i></i><i></i><i></i>
     </span>
     <span class="music-toggle__label">Nhạc</span>
   </button>
 
-  <!-- YouTube chạy nền, không hiển thị player -->
-  <div class="youtube-audio" id="youtube-audio" aria-hidden="true"></div>
+  <audio id="background-audio" src="./assets/audio.mp3" preload="metadata" loop></audio>
 
   <main class="site-shell">
     <article class="invitation-paper" id="invitation">
@@ -173,9 +172,20 @@
         <div class="event-axis" aria-hidden="true"><i></i></div>
 
         <figure class="graduate-photo">
-          <div class="graduate-photo__halo" aria-hidden="true"></div>
-          <img src="./assets/img/Duy.jpg?v=20260907-2" alt="Nguyễn Ngọc Duy" fetchpriority="high">
-          <figcaption>Nguyễn Ngọc Duy</figcaption>
+          <div class="graduate-photo__window">
+            <img src="./assets/img/Duy.jpg?v=20260907-2" alt="Nguyễn Ngọc Duy" fetchpriority="high">
+          </div>
+          <svg class="graduate-photo__cap" viewBox="0 0 180 150" aria-hidden="true">
+            <defs>
+              <linearGradient id="cap-gold"><stop stop-color="#ad741a"/><stop offset=".48" stop-color="#fff0a0"/><stop offset="1" stop-color="#c38a25"/></linearGradient>
+            </defs>
+            <path d="M10 66 86 13l84 24-76 54Z" fill="#171719" stroke="url(#cap-gold)" stroke-width="3"/>
+            <path d="M49 70v31q42 21 77-19V56q-39-1-77 14Z" fill="#202023" stroke="url(#cap-gold)" stroke-width="2"/>
+            <path d="M50 89q39 8 75-20v12q-34 32-75 21Z" fill="url(#cap-gold)"/>
+            <path d="M88 50 29 79l-5 43m0-7-8 23m8-23 1 25m-1-25 8 22" fill="none" stroke="url(#cap-gold)" stroke-width="3"/>
+            <text x="91" y="128" text-anchor="middle" fill="url(#cap-gold)" font-family="Georgia, serif" font-size="31" font-weight="bold">2026</text>
+          </svg>
+          <figcaption>Congratulations Class of 2026</figcaption>
         </figure>
       </section>
 
@@ -197,6 +207,6 @@
     </article>
   </main>
 
-  <script src="./js/script.js?v=20260907-2"></script>
+  <script src="./js/script.js?v=20260907-3"></script>
 </body>
 </html>

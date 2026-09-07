@@ -2,13 +2,12 @@
  * Thiệp mời tốt nghiệp — Nguyễn Ngọc Duy / FTU
  * --------------------------------------------------
  * Chỉ cần sửa EVENT_CONFIG nếu có lịch lễ chính xác.
- * Nhạc nền dùng YouTube và lặp vô hạn sau khi khách bấm "Mở thiệp mời".
+ * Nhạc MP3 lặp lại sau khi khách bấm "Mở thiệp mời".
  */
 
 const EVENT_CONFIG = {
   time: "8H SÁNG",
-  date: "THỨ BẢY, 19.09.2026",
-  youtubeVideoId: "niPkap1ozUA"
+  date: "THỨ BẢY, 19.09.2026"
 };
 
 const gate = document.getElementById("open-gate");
@@ -16,9 +15,7 @@ const openButton = document.getElementById("open-invitation");
 const guestNameInput = document.getElementById("guest-name-input");
 const invitationGuestName = document.getElementById("invitation-guest-name");
 const musicToggle = document.getElementById("music-toggle");
-const youtubeAudio = document.getElementById("youtube-audio");
-
-let youtubeIframe = null;
+const backgroundAudio = document.getElementById("background-audio");
 let musicPlaying = false;
 
 function applyEventConfig() {
@@ -39,13 +36,13 @@ function getSakuraPetalCount() {
 
 function createSakuraPetal(index, total) {
   const petal = document.createElement("span");
-  const size = 8 + Math.random() * 9;
+  const size = 14 + Math.random() * 12;
   const duration = 8.5 + Math.random() * 7;
   const drift = -140 + Math.random() * 280;
   const rotation = 1.5 + Math.random() * 3.5;
   const delay = (duration / total) * index + Math.random() * 1.5;
 
-  petal.className = "sakura-petal";
+  petal.className = "autumn-leaf";
   petal.style.left = `${Math.random() * 100}vw`;
   petal.style.width = `${size}px`;
   petal.style.height = `${size * (0.68 + Math.random() * 0.30)}px`;
@@ -84,33 +81,13 @@ function refreshSakuraDensity() {
   sakuraResizeTimer = window.setTimeout(startOriginalSakuraEffect, 180);
 }
 
-function createYoutubeAudio() {
-  if (youtubeIframe) return;
-
-  const id = EVENT_CONFIG.youtubeVideoId;
-  const iframe = document.createElement("iframe");
-  iframe.title = "Nhạc nền lễ tốt nghiệp";
-  iframe.width = "1";
-  iframe.height = "1";
-  iframe.tabIndex = -1;
-  iframe.setAttribute("allow", "autoplay; encrypted-media");
-  iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
-  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&loop=1&playlist=${id}&controls=0&playsinline=1&rel=0&enablejsapi=1`;
-
-  youtubeAudio.replaceChildren(iframe);
-  youtubeIframe = iframe;
-  musicPlaying = true;
-  updateMusicButton();
-}
-
-function sendYoutubeCommand(command) {
-  if (!youtubeIframe || !youtubeIframe.contentWindow) return;
-
-  youtubeIframe.contentWindow.postMessage(JSON.stringify({
-    event: "command",
-    func: command,
-    args: []
-  }), "*");
+async function playMusic() {
+  try {
+    await backgroundAudio.play();
+  } catch {
+    musicPlaying = false;
+    updateMusicButton();
+  }
 }
 
 function updateMusicButton() {
@@ -121,20 +98,11 @@ function updateMusicButton() {
 }
 
 function toggleMusic() {
-  if (!youtubeIframe) {
-    createYoutubeAudio();
-    return;
-  }
-
-  if (musicPlaying) {
-    sendYoutubeCommand("pauseVideo");
-    musicPlaying = false;
+  if (!backgroundAudio.paused) {
+    backgroundAudio.pause();
   } else {
-    sendYoutubeCommand("playVideo");
-    musicPlaying = true;
+    playMusic();
   }
-
-  updateMusicButton();
 }
 
 function applyGuestName() {
@@ -149,7 +117,7 @@ function openInvitation() {
   gate.classList.add("is-opened");
   document.body.classList.remove("is-locked");
   document.body.classList.add("invitation-open");
-  createYoutubeAudio();
+  playMusic();
   setupReveal();
 
   window.setTimeout(() => {
@@ -175,6 +143,18 @@ function setupReveal() {
 
 openButton.addEventListener("click", openInvitation);
 musicToggle.addEventListener("click", toggleMusic);
+backgroundAudio.addEventListener("playing", () => {
+  musicPlaying = true;
+  updateMusicButton();
+});
+backgroundAudio.addEventListener("pause", () => {
+  musicPlaying = false;
+  updateMusicButton();
+});
+backgroundAudio.addEventListener("error", () => {
+  musicPlaying = false;
+  updateMusicButton();
+});
 
 window.addEventListener("keydown", (event) => {
   if (event.key !== "Enter" || gate.hidden) return;
