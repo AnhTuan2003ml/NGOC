@@ -7,7 +7,7 @@
  */
 
 const EVENT_CONFIG = {
-  time: "8:00 – 10:00 AM",
+  time: "TỪ 8H ĐẾN 10H SÁNG",
   date: "THỨ BẢY, 19.09.2026"
 };
 

@@ -752,17 +752,19 @@ a { color: inherit; }
   align-items: stretch;
   align-self: center;
   height: 100%;
-  max-height: clamp(230px, 36dvh, 330px);
+  max-height: clamp(195px, 29dvh, 232px);
   min-height: 0;
   margin-top: 0;
   overflow: hidden;
 }
 
+/* Các mục thông tin gom thành một cụm ở giữa, không dàn đều hết chiều cao. */
 .event-details {
+  --details-gap: clamp(7px, 1.3dvh, 13px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: clamp(8px, 1.6dvh, 16px);
+  justify-content: center;
+  gap: var(--details-gap);
   min-height: 0;
   padding: 2px 0;
 }
@@ -837,12 +839,14 @@ a { color: inherit; }
   border-bottom: 1px solid rgba(197,29,36,.22);
 }
 
+/* Đếm ngược thuộc cùng nhóm với "THỜI GIAN" nên bám sát khối phía trên. */
 .countdown {
   display: flex;
   align-items: center;
   min-width: 0;
   width: calc(100% - clamp(24px, 3.8dvh, 34px));
   gap: clamp(3px, .5dvh, 6px);
+  margin-top: calc(var(--details-gap, 10px) * -.45);
   margin-left: clamp(24px, 3.8dvh, 34px);
 }
 
@@ -909,13 +913,13 @@ a { color: inherit; }
   margin: 0;
 }
 
-/* Khung ảnh: cao đúng bằng hàng grid, rộng theo đúng tỉ lệ ảnh gốc (284×460)
+/* Khung ảnh: cao đúng bằng hàng grid, rộng theo đúng tỉ lệ ảnh gốc (1920×2560 = 3:4)
    để không phải crop/zoom ảnh. */
 .graduate-photo__frame {
   position: relative;
   height: 100%;
   max-width: 100%;
-  aspect-ratio: 284 / 460;
+  aspect-ratio: 3 / 4;
   isolation: isolate;
 }
 
@@ -1271,7 +1275,7 @@ a { color: inherit; }
     gap: clamp(6px, 2.2vw, 10px);
   }
 
-  .event-details { gap: clamp(6px, 1.35dvh, 10px); }
+  .event-details { --details-gap: clamp(6px, 1.35dvh, 10px); }
   .countdown { width: calc(100% - 24px); gap: 1px; }
   .countdown__block { padding: 3px 1px; }
   .countdown__num { font-size: clamp(.68rem, 1.35dvh, .86rem); }
@@ -1284,7 +1288,7 @@ a { color: inherit; }
   .detail-item b { font-size: clamp(.43rem, .86dvh, .54rem); }
   .detail-item em { font-size: clamp(.52rem, 1.02dvh, .65rem); }
   .detail-item p, .detail-item a { font-size: clamp(.40rem, .78dvh, .49rem); }
-  .event-composition { max-height: clamp(210px, 34dvh, 300px); }
+  .event-composition { max-height: clamp(178px, 25dvh, 225px); }
   .event-axis { min-height: 85px; }
 
   .invitation-footer {
@@ -1317,7 +1321,7 @@ a { color: inherit; }
   .graduate-script { font-size: clamp(1.65rem, 3.45dvh, 2.05rem); }
   .invite-copy h3 { font-size: clamp(1.2rem, 2.9dvh, 1.65rem); margin-top: 14px; }
   .ceremony-year { margin-top: 5px; }
-  .event-details { gap: 4px; }
+  .event-details { --details-gap: 5px; }
   .detail-item p br { display: none; }
   .invitation-footer p br { display: none; }
 }
@@ -1354,7 +1358,7 @@ a { color: inherit; }
   .ceremony-year { font-size: .68rem; margin-top: 7px; }
 
   .event-composition { grid-template-columns: minmax(150px,.84fr) 1px minmax(190px,1.1fr); gap: 11px; }
-  .event-details { gap: clamp(7px, 2.3dvh, 11px); }
+  .event-details { --details-gap: clamp(7px, 2.3dvh, 11px); }
   .detail-item { grid-template-columns: 25px 1fr; gap: 4px; }
   .detail-icon { width: 25px; height: 25px; }
   .detail-item span { font-size: .45rem; }
@@ -1362,7 +1366,7 @@ a { color: inherit; }
   .detail-item b { font-size: .45rem; }
   .detail-item em { font-size: .55rem; }
   .detail-item p, .detail-item a { font-size: .42rem; }
-  .event-composition { max-height: none; }
+  .event-composition { max-height: clamp(190px, 66dvh, 300px); }
   .event-axis { min-height: 100px; max-height: 185px; }
 
   .invitation-footer { grid-template-columns: 38px 1fr 34px; margin-top: 0; }
@@ -1375,7 +1379,7 @@ a { color: inherit; }
 @media (min-width: 521px) and (min-height: 601px) and (max-height: 780px) {
   .invitation-paper { width: min(560px, 94vw, calc((var(--vh) - 14px) * .76)); }
   .university-heading p { font-size: .54rem; }
-  .event-details { gap: 9px; }
+  .event-details { --details-gap: 9px; }
   .invitation-footer p { font-size: .72rem; }
 }
 
