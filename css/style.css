@@ -335,19 +335,6 @@
 	}
 }
 
-.sakura {
-	/* background: -webkit-linear-gradient(120deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.9));
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.9));*/
-	background: red;
-	pointer-events: none;
-	position: absolute
-}
-
-.sakura {
-	background: #674ea7;
-}
-
-
 /*******************************/
 
 
@@ -376,6 +363,7 @@
   --shadow: 0 24px 70px rgba(87, 48, 63, .18), 0 4px 16px rgba(87, 48, 63, .08);
   --sans: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --serif: "Playfair Display", Georgia, serif;
+  --display: "Bodoni Moda", "Playfair Display", Georgia, serif;
   --script: "Dancing Script", cursive;
 }
 
@@ -427,13 +415,6 @@ a { color: inherit; }
   height: 100dvh;
   overflow: hidden;
   pointer-events: none;
-}
-
-.sakura {
-  z-index: 81 !important;
-  background: linear-gradient(135deg, #ffd9dc 0%, #d94b52 58%, #fff5f5 100%) !important;
-  box-shadow: 0 1px 2px rgba(126, 44, 70, .11);
-  opacity: .70;
 }
 
 /* Lá thu dùng chuyển động rơi và xoay trên desktop + mobile. */
@@ -491,6 +472,57 @@ a { color: inherit; }
   }
   100% {
     transform: translate3d(var(--drift-x), 116vh, 0) rotate(var(--rot-3)) rotateX(360deg);
+    opacity: 0;
+  }
+}
+
+/* Đồng coin rơi cùng lá: lật quanh trục dọc để tạo cảm giác đồng xu xoay. */
+.falling-coin {
+  --fall-duration: 13s;
+  --fall-delay: 0s;
+  --drift-x: 40px;
+  --drift-mid: 15px;
+  --drift-back: -9px;
+  --spin: 1080deg;
+  --petal-opacity: .92;
+  position: absolute;
+  top: -12vh;
+  z-index: 81;
+  display: block;
+  pointer-events: none;
+  opacity: var(--petal-opacity);
+  filter: drop-shadow(0 2px 3px rgba(60, 40, 10, .28));
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  animation: coinFall var(--fall-duration) linear infinite;
+  animation-delay: var(--fall-delay);
+}
+
+.falling-coin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes coinFall {
+  0% {
+    transform: translate3d(0, -8vh, 0) rotate(0deg) rotateY(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--petal-opacity);
+  }
+  35% {
+    transform: translate3d(var(--drift-mid), 34vh, 0) rotate(14deg) rotateY(calc(var(--spin) * .35));
+  }
+  68% {
+    transform: translate3d(var(--drift-back), 72vh, 0) rotate(-12deg) rotateY(calc(var(--spin) * .68));
+  }
+  92% {
+    opacity: var(--petal-opacity);
+  }
+  100% {
+    transform: translate3d(var(--drift-x), 116vh, 0) rotate(8deg) rotateY(var(--spin));
     opacity: 0;
   }
 }
@@ -662,7 +694,8 @@ a { color: inherit; }
   font-family: var(--serif);
   font-size: clamp(1.28rem, 2.8dvh, 2.1rem);
   font-weight: 600;
-  line-height: 1.02;
+  line-height: 1.28;
+  letter-spacing: .025em;
 }
 
 .guest-rule {
@@ -674,39 +707,47 @@ a { color: inherit; }
 .formal-line--second { margin-bottom: 0; }
 
 .graduate-script {
-  margin: 0;
+  margin: clamp(5px, 1dvh, 10px) 0 0;
   color: var(--rose-dark);
   font-family: var(--script);
   font-size: clamp(2rem, 4.5dvh, 3.55rem);
   font-weight: 600;
-  line-height: .94;
+  line-height: 1.12;
+  letter-spacing: .025em;
 }
 
 .invite-copy h3 {
-  margin: clamp(12px, 2dvh, 20px) 0 0;
+  margin: clamp(22px, 3.5dvh, 34px) 0 0;
   color: var(--rose-deep);
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(1.65rem, 3.75dvh, 3.1rem);
-  font-weight: 800;
-  letter-spacing: .025em;
-  line-height: .92;
+  font-weight: 500;
+  letter-spacing: .16em;
+  line-height: 1.15;
 }
 
 .ceremony-year {
-  margin: clamp(2px, .35dvh, 4px) 0 0;
+  margin: clamp(8px, 1.2dvh, 13px) 0 0;
   color: var(--ftu-red);
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: clamp(.72rem, 1.55dvh, 1.08rem);
+  font-weight: 400;
+  letter-spacing: .17em;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
 /* ---------- Bottom event + portrait: stretches only inside remaining viewport ---------- */
+/* Hàng grid tự co theo khối text; ảnh stretch nên luôn cao bằng khối text bên cạnh. */
 .event-composition {
   position: relative;
   z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, .92fr) 1px minmax(0, 1.12fr);
+  grid-template-rows: auto;
   gap: clamp(8px, 2.1vw, 22px);
   align-items: stretch;
+  align-content: center;
   min-height: 0;
   margin-top: clamp(5px, .8dvh, 9px);
   overflow: hidden;
@@ -715,9 +756,9 @@ a { color: inherit; }
 .event-details {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: clamp(8px, 1.8dvh, 18px);
-  min-height: 0;
+  justify-content: space-between;
+  gap: clamp(8px, 1.6dvh, 16px);
+  min-height: clamp(230px, 36dvh, 330px);
   padding: 2px 0;
 }
 
@@ -794,12 +835,16 @@ a { color: inherit; }
 .countdown {
   display: flex;
   align-items: center;
+  min-width: 0;
+  width: calc(100% - clamp(24px, 3.8dvh, 34px));
   gap: clamp(3px, .5dvh, 6px);
   margin-left: clamp(24px, 3.8dvh, 34px);
 }
 
 .countdown__block {
   display: grid;
+  min-width: 0;
+  flex: 1 1 0;
   gap: 2px;
   justify-items: center;
   padding: clamp(3px, .7dvh, 6px) clamp(5px, 1dvh, 10px);
@@ -832,9 +877,9 @@ a { color: inherit; }
 .event-axis {
   position: relative;
   width: 1px;
-  height: 72%;
+  height: 78%;
   min-height: 110px;
-  max-height: 235px;
+  max-height: 260px;
   align-self: center;
   background: linear-gradient(180deg, transparent, rgba(197,29,36,.48) 15%, rgba(197,29,36,.48) 85%, transparent);
 }
@@ -851,17 +896,26 @@ a { color: inherit; }
 }
 
 .graduate-photo {
-  position: relative;
+  display: flex;
+  justify-content: center;
   align-self: stretch;
   min-width: 0;
   min-height: 0;
   margin: 0;
+}
+
+/* Khung ảnh: cao đúng bằng hàng grid, rộng theo tỉ lệ chân dung 3:4. */
+.graduate-photo__frame {
+  position: relative;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 3 / 4;
   isolation: isolate;
 }
 
 .graduate-photo__window {
   position: absolute;
-  inset: 7% 4% 12%;
+  inset: 0;
   overflow: hidden;
   border: clamp(3px, .5vw, 5px) solid transparent;
   border-radius: 50%;
@@ -875,8 +929,8 @@ a { color: inherit; }
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: 50% 28%;
   border-radius: inherit;
   filter: saturate(.92) contrast(.98) brightness(1.02);
 }
@@ -884,21 +938,21 @@ a { color: inherit; }
 .graduate-photo__cap {
   position: absolute;
   top: 0;
-  left: 0;
+  left: -3%;
   z-index: 2;
-  width: 43%;
-  height: 27%;
+  width: 46%;
+  height: 30%;
   overflow: visible;
   filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
 }
 
 .graduate-photo figcaption {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 8%;
+  left: -4%;
+  right: -4%;
+  bottom: 7%;
   z-index: 3;
-  padding: clamp(7px, 1.4dvh, 13px) 10%;
+  padding: clamp(6px, 1.2dvh, 11px) 8%;
   clip-path: polygon(0 0, 13% 8%, 87% 8%, 100% 0, 94% 50%, 100% 100%, 87% 92%, 13% 92%, 0 100%, 6% 50%);
   background: linear-gradient(100deg, #a56d19, #f9e494 28%, #d9ad48 60%, #f6de88 82%, #aa741f);
   color: #603b12;
@@ -914,7 +968,7 @@ a { color: inherit; }
   position: relative;
   z-index: 3;
   display: grid;
-  grid-template-columns: clamp(42px, 6.5dvh, 62px) 1fr clamp(25px, 4dvh, 38px);
+  grid-template-columns: clamp(42px, 6.5dvh, 62px) 1fr clamp(36px, 5.6dvh, 54px);
   gap: 4px;
   align-items: end;
   min-height: 0;
@@ -953,12 +1007,16 @@ a { color: inherit; }
   line-height: 1.17;
 }
 
-.heart-mark {
-  color: var(--rose);
-  font-family: var(--script);
-  font-size: clamp(1.55rem, 3.5dvh, 2.5rem);
-  line-height: .75;
-  transform: rotate(-10deg);
+.coin-mark {
+  justify-self: end;
+  width: clamp(36px, 5.6dvh, 54px);
+  transform: rotate(-8deg);
+}
+.coin-mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 2px 3px rgba(60, 40, 10, .22));
 }
 
 /* ---------- Opening overlay ---------- */
@@ -1043,6 +1101,41 @@ a { color: inherit; }
   font-size: clamp(1.4rem, 3.6dvh, 1.9rem);
   line-height: 1.35;
   letter-spacing: .035em;
+}
+/* Tên người tốt nghiệp + tag KDT nằm riêng một dòng, căn giữa. */
+.open-gate__card strong.gate-name {
+  display: grid;
+  justify-items: center;
+  gap: clamp(4px, .8dvh, 8px);
+  margin: 8px 0 18px;
+  color: var(--rose-dark);
+  font-family: var(--script);
+  font-size: clamp(1.8rem, 4.6dvh, 2.55rem);
+  font-weight: 700;
+  letter-spacing: .045em;
+  line-height: 1.2;
+}
+.gate-name__full {
+  display: block;
+}
+.gate-name__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #b87918;
+  font-family: var(--serif);
+  font-size: .42em;
+  font-weight: 700;
+  letter-spacing: .3em;
+  line-height: 1;
+  text-indent: .3em;
+}
+.gate-name__tag::before,
+.gate-name__tag::after {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: rgba(184, 121, 24, .55);
 }
 
 .guest-input {
@@ -1164,8 +1257,8 @@ a { color: inherit; }
   .formal-line { font-size: clamp(.54rem, 1.08dvh, .68rem); }
   .guest-name { font-size: clamp(1.12rem, 2.35dvh, 1.45rem); }
   .graduate-script { font-size: clamp(1.8rem, 3.8dvh, 2.45rem); }
-  .invite-copy h3 { font-size: clamp(1.45rem, 3.2dvh, 2rem); }
-  .ceremony-year { font-size: clamp(.65rem, 1.3dvh, .82rem); margin-top: 1px; }
+  .invite-copy h3 { font-size: clamp(1.35rem, 3.2dvh, 2rem); letter-spacing: .12em; margin-top: clamp(16px, 2.7dvh, 24px); }
+  .ceremony-year { font-size: clamp(.58rem, 1.18dvh, .76rem); margin-top: 7px; letter-spacing: .12em; }
 
   .event-composition {
     grid-template-columns: minmax(0, .92fr) 1px minmax(0, 1.08fr);
@@ -1174,6 +1267,11 @@ a { color: inherit; }
   }
 
   .event-details { gap: clamp(6px, 1.35dvh, 10px); }
+  .countdown { width: calc(100% - 24px); gap: 1px; }
+  .countdown__block { padding: 3px 1px; }
+  .countdown__num { font-size: clamp(.68rem, 1.35dvh, .86rem); }
+  .countdown__block small { font-size: clamp(.29rem, .53dvh, .4rem); letter-spacing: 0; }
+  .countdown__sep { font-size: clamp(.48rem, .9dvh, .64rem); }
   .detail-item { grid-template-columns: 24px minmax(0,1fr); gap: 4px; }
   .detail-icon { width: 24px; height: 24px; }
   .detail-item span { font-size: clamp(.43rem, .83dvh, .52rem); }
@@ -1181,16 +1279,18 @@ a { color: inherit; }
   .detail-item b { font-size: clamp(.43rem, .86dvh, .54rem); }
   .detail-item em { font-size: clamp(.52rem, 1.02dvh, .65rem); }
   .detail-item p, .detail-item a { font-size: clamp(.40rem, .78dvh, .49rem); }
+  .event-details { min-height: clamp(210px, 33dvh, 300px); }
   .event-axis { min-height: 85px; }
+  .graduate-photo img { object-position: 45% 30%; }
 
   .invitation-footer {
-    grid-template-columns: 34px 1fr 24px;
+    grid-template-columns: 34px 1fr 34px;
     gap: 2px;
     margin-top: 1px;
   }
   .diploma-art svg { width: 34px; }
   .invitation-footer p { font-size: clamp(.58rem, 1.15dvh, .72rem); }
-  .heart-mark { font-size: 1.45rem; }
+  .coin-mark { width: 34px; }
 
   .guest-input {
     width: min(270px, 100%);
@@ -1211,7 +1311,8 @@ a { color: inherit; }
   .invite-copy h1 { font-size: clamp(2rem, 4.7dvh, 2.55rem); }
   .cap-divider { margin-block: 1px 2px; }
   .graduate-script { font-size: clamp(1.65rem, 3.45dvh, 2.05rem); }
-  .invite-copy h3 { font-size: clamp(1.35rem, 2.9dvh, 1.75rem); }
+  .invite-copy h3 { font-size: clamp(1.2rem, 2.9dvh, 1.65rem); margin-top: 14px; }
+  .ceremony-year { margin-top: 5px; }
   .event-details { gap: 4px; }
   .detail-item p br { display: none; }
   .invitation-footer p br { display: none; }
@@ -1246,7 +1347,7 @@ a { color: inherit; }
   .guest-name { font-size: clamp(1.1rem, 4dvh, 1.45rem); }
   .graduate-script { font-size: clamp(1.75rem, 7dvh, 2.45rem); }
   .invite-copy h3 { font-size: clamp(1.35rem, 5.7dvh, 2rem); }
-  .ceremony-year { font-size: .68rem; margin-top: 1px; }
+  .ceremony-year { font-size: .68rem; margin-top: 7px; }
 
   .event-composition { grid-template-columns: minmax(150px,.84fr) 1px minmax(190px,1.1fr); gap: 11px; }
   .event-details { gap: clamp(7px, 2.3dvh, 11px); }
@@ -1257,12 +1358,13 @@ a { color: inherit; }
   .detail-item b { font-size: .45rem; }
   .detail-item em { font-size: .55rem; }
   .detail-item p, .detail-item a { font-size: .42rem; }
+  .event-details { min-height: clamp(180px, 62dvh, 300px); }
   .event-axis { min-height: 100px; max-height: 185px; }
 
-  .invitation-footer { grid-template-columns: 38px 1fr 24px; margin-top: 0; }
+  .invitation-footer { grid-template-columns: 38px 1fr 34px; margin-top: 0; }
   .diploma-art svg { width: 38px; }
   .invitation-footer p { font-size: .62rem; }
-  .heart-mark { font-size: 1.55rem; }
+  .coin-mark { width: 34px; }
 }
 
 /* Compact desktop heights like 1366×768 */
@@ -1281,8 +1383,9 @@ a { color: inherit; }
     transition-duration: .01ms !important;
   }
 
-  /* Giữ lá rơi hoạt động trên desktop ngay cả khi Windows bật Reduce motion. */
-  .autumn-leaf {
+  /* Giữ lá và coin rơi hoạt động trên desktop ngay cả khi Windows bật Reduce motion. */
+  .autumn-leaf,
+  .falling-coin {
     animation-duration: var(--fall-duration) !important;
     animation-iteration-count: infinite !important;
   }

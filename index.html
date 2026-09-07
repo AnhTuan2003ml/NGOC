@@ -14,11 +14,11 @@
   <link rel="icon" href="./assets/img/FTU-logo.png?v=20260907-2" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css?v=20260907-4">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Bodoni+Moda:wght@400;500;600;700;800&family=Dancing+Script:wght@500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css?v=20260907-9">
 </head>
 <body class="is-locked">
-  <!-- Lá thu vàng rơi -->
+  <!-- Lá thu vàng và đồng coin rơi -->
   <div class="sakura-falling" aria-hidden="true"></div>
 
   <!-- Phát nhạc sau thao tác mở thiệp -->
@@ -29,7 +29,10 @@
       </div>
       <p>Đại học Ngoại thương</p>
       <h1 id="open-gate-title">Thiệp mời lễ tốt nghiệp</h1>
-      <strong>Nguyễn Ngọc Duy</strong>
+      <strong class="gate-name">
+        <span class="gate-name__full">Nguyễn Ngọc Duy</span>
+        <span class="gate-name__tag">KDT</span>
+      </strong>
 
       <label class="guest-input" for="guest-name-input">
         <span>Gửi đến bạn:</span>
@@ -118,7 +121,7 @@
             </div>
             <div>
               <span>THỜI GIAN</span>
-              <strong id="event-time">8H SÁNG</strong>
+              <strong id="event-time">8:00 – 10:00 AM</strong>
               <em id="event-date">THỨ BẢY, 19.09.2026</em>
             </div>
           </div>
@@ -172,6 +175,7 @@
         <div class="event-axis" aria-hidden="true"><i></i></div>
 
         <figure class="graduate-photo">
+          <div class="graduate-photo__frame">
           <div class="graduate-photo__window">
             <img src="./assets/img/Duy.jpg?v=20260907-2" alt="Nguyễn Ngọc Duy" fetchpriority="high">
           </div>
@@ -186,6 +190,7 @@
             <text x="91" y="128" text-anchor="middle" fill="url(#cap-gold)" font-family="Georgia, serif" font-size="31" font-weight="bold">2026</text>
           </svg>
           <figcaption>Congratulations Class of 2026</figcaption>
+          </div>
         </figure>
       </section>
 
@@ -202,11 +207,26 @@
           </svg>
         </div>
         <p>Sự hiện diện của bạn sẽ là niềm vui và<br>kỷ niệm đáng nhớ trong ngày đặc biệt này!</p>
-        <div class="heart-mark" aria-hidden="true">♡</div>
+        <div class="coin-mark" aria-hidden="true">
+          <svg viewBox="0 0 96 64">
+            <g transform="translate(40 8)">
+              <circle cx="24" cy="24" r="23" fill="#d7d9df" stroke="#8f929c" stroke-width="1.6"/>
+              <circle cx="24" cy="24" r="17.5" fill="none" stroke="#fff" stroke-width="1.4" opacity=".8"/>
+              <path d="M24 9l9.5 15.5L24 30.5l-9.5-6z" fill="#6b6f7d"/>
+              <path d="M24 33.5l9.5-6L24 39.5l-9.5-12z" fill="#8f929c"/>
+            </g>
+            <g transform="translate(4 14)">
+              <circle cx="24" cy="24" r="23" fill="#e2b13c" stroke="#a8741a" stroke-width="1.6"/>
+              <circle cx="24" cy="24" r="17.5" fill="none" stroke="#fff0a0" stroke-width="1.4" opacity=".85"/>
+              <text x="24" y="33" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="25" fill="#7a5210">B</text>
+              <path d="M21.5 9v4M26.5 9v4M21.5 35v4M26.5 35v4" stroke="#7a5210" stroke-width="2.2" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
       </footer>
     </article>
   </main>
 
-  <script src="./js/script.js?v=20260907-3"></script>
+  <script src="./js/script.js?v=20260907-6"></script>
 </body>
 </html>
