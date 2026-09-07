@@ -719,7 +719,7 @@ a { color: inherit; }
 }
 
 .invite-copy h3 {
-  margin: clamp(22px, 3.5dvh, 34px) 0 0;
+  margin: clamp(12px, 2.2dvh, 22px) 0 0;
   color: var(--rose-deep);
   font-family: var(--display);
   font-size: clamp(1.65rem, 3.75dvh, 3.1rem);
@@ -746,13 +746,13 @@ a { color: inherit; }
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, .92fr) 1px minmax(0, 1.12fr);
+  grid-template-columns: minmax(0, .86fr) 1px minmax(0, 1.24fr);
   grid-template-rows: minmax(0, 1fr);
   gap: clamp(8px, 2.1vw, 22px);
   align-items: stretch;
   align-self: center;
   height: 100%;
-  max-height: clamp(195px, 29dvh, 232px);
+  max-height: 100%;
   min-height: 0;
   margin-top: 0;
   overflow: hidden;
@@ -1288,7 +1288,7 @@ a { color: inherit; }
   .detail-item b { font-size: clamp(.43rem, .86dvh, .54rem); }
   .detail-item em { font-size: clamp(.52rem, 1.02dvh, .65rem); }
   .detail-item p, .detail-item a { font-size: clamp(.40rem, .78dvh, .49rem); }
-  .event-composition { max-height: clamp(178px, 25dvh, 225px); }
+  .event-composition { max-height: 100%; }
   .event-axis { min-height: 85px; }
 
   .invitation-footer {
