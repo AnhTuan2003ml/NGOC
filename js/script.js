@@ -187,7 +187,7 @@ window.addEventListener("resize", refreshSakuraDensity, { passive: true });
 
 applyEventConfig();
 
-const COUNTDOWN_TARGET = new Date(2026, 8, 19, 8, 0, 0);
+const COUNTDOWN_TARGET = new Date("2026-09-19T08:00:00+07:00");
 const countdownElements = {
   days: document.getElementById("cd-days"),
   hours: document.getElementById("cd-hours"),

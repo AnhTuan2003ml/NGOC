@@ -857,14 +857,14 @@ a { color: inherit; }
   min-height: 0;
   margin: 0;
   overflow: hidden;
-  border-radius: 46% 46% 12px 12px;
+  border-radius: 12px;
 }
 
 .graduate-photo__halo {
   position: absolute;
   inset: 8% 2% 3%;
-  border-radius: 48% 48% 18px 18px;
-  background: radial-gradient(circle at 50% 38%, rgba(255,255,255,.98), rgba(247,220,228,.68) 58%, rgba(245,222,228,0) 77%);
+  border-radius: 12px;
+  background: radial-gradient(circle at 50% 38%, rgba(255,255,255,.98), rgba(197,29,36,.12) 58%, rgba(197,29,36,0) 77%);
 }
 
 .graduate-photo img {
@@ -872,8 +872,8 @@ a { color: inherit; }
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 52% 66%;
+  object-fit: contain;
+  object-position: center;
   border-radius: inherit;
   filter: saturate(.92) contrast(.98) brightness(1.02);
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, rgba(0,0,0,.7) 95%, transparent 100%);
@@ -960,7 +960,7 @@ a { color: inherit; }
   padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   overflow: hidden;
   background:
-    radial-gradient(circle at center, rgba(255,250,249,.96), rgba(139,17,23,.98)),
+    radial-gradient(circle at center, rgba(197,43,50,.75), rgba(139,17,23,.98)),
     var(--canvas);
   transition: opacity .62s ease, visibility .62s ease;
 }
@@ -1002,13 +1002,11 @@ a { color: inherit; }
   background: var(--rose-pale);
   box-shadow: inset 0 0 0 6px rgba(255,255,255,.62);
 }
-.open-gate__seal svg {
-  width: 60%;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.open-gate__seal img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .open-gate__card p {
   margin: 0;
@@ -1153,8 +1151,7 @@ a { color: inherit; }
   .invitation-paper::before { inset: 6px; border-radius: 13px; }
   .paper-botanical { width: 42%; opacity: .105; }
 
-  .academic-mark__cap { width: clamp(22px, 3.4dvh, 28px); height: clamp(22px, 3.4dvh, 28px); }
-  .academic-mark strong { font-size: clamp(.98rem, 2.15dvh, 1.25rem); }
+  .academic-mark__logo { width: clamp(38px, 5.2dvh, 48px); height: clamp(38px, 5.2dvh, 48px); }
   .university-heading h2 { font-size: clamp(.62rem, 1.28dvh, .78rem); }
   .university-heading p { font-size: clamp(.45rem, .9dvh, .56rem); }
   .class-line { font-size: clamp(.38rem, .72dvh, .46rem); }
@@ -1183,8 +1180,7 @@ a { color: inherit; }
   .detail-item em { font-size: clamp(.52rem, 1.02dvh, .65rem); }
   .detail-item p, .detail-item a { font-size: clamp(.40rem, .78dvh, .49rem); }
   .event-axis { min-height: 85px; }
-  .graduate-photo { border-radius: 44% 44% 9px 9px; }
-  .graduate-photo img { object-position: 53% 66%; }
+  .graduate-photo { border-radius: 9px; }
   .graduate-photo figcaption { display: none; }
 
   .invitation-footer {
@@ -1239,8 +1235,7 @@ a { color: inherit; }
   .event-composition { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; min-height: 0; }
   .invitation-footer { grid-column: 1 / -1; grid-row: 3; }
 
-  .academic-mark__cap { width: 24px; height: 24px; }
-  .academic-mark strong { font-size: 1.05rem; }
+  .academic-mark__logo { width: 38px; height: 38px; }
   .university-heading h2 { font-size: .64rem; }
   .university-heading p { font-size: .46rem; }
   .class-line { font-size: .39rem; margin-top: 2px; }
@@ -1263,7 +1258,7 @@ a { color: inherit; }
   .detail-item em { font-size: .55rem; }
   .detail-item p, .detail-item a { font-size: .42rem; }
   .event-axis { min-height: 100px; max-height: 185px; }
-  .graduate-photo { border-radius: 40% 40% 10px 10px; }
+  .graduate-photo { border-radius: 10px; }
   .graduate-photo figcaption { display: none; }
 
   .invitation-footer { grid-template-columns: 38px 1fr 24px; margin-top: 0; }
