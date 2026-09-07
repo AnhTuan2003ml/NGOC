@@ -353,26 +353,26 @@
 
 
 /* ================================================================
-   NEU Graduation Invitation — Single Viewport Edition
+   FTU Graduation Invitation — Single Viewport Edition
    Mục tiêu: toàn bộ thiệp nằm trong đúng 1 cửa sổ, không cuộn trang.
    Responsive theo chiều rộng + chiều cao cho desktop/mobile/landscape.
    ================================================================ */
 
 :root {
   --paper: #fffdf9;
-  --paper-2: #fbf4f1;
-  --canvas: #ead3dc;
-  --canvas-2: #f8ebf0;
-  --rose: #c85f7c;
-  --rose-dark: #8e344d;
-  --rose-deep: #75223d;
-  --rose-soft: #e7a8b9;
-  --rose-pale: #f8dfe6;
-  --neu-blue: #173f78;
-  --neu-blue-soft: #5f759a;
+  --paper-2: #fbf3f3;
+  --canvas: #8b1117;
+  --canvas-2: #c52b32;
+  --rose: #c51d24;
+  --rose-dark: #9d151b;
+  --rose-deep: #7a0f14;
+  --rose-soft: #e6a0a4;
+  --rose-pale: #f9dddf;
+  --ftu-red: #a81920;
+  --ftu-red-soft: #8f4549;
   --ink: #30292c;
   --muted: #746a6e;
-  --line: rgba(23, 63, 120, .22);
+  --line: rgba(197, 29, 36, .22);
   --shadow: 0 24px 70px rgba(87, 48, 63, .18), 0 4px 16px rgba(87, 48, 63, .08);
   --sans: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --serif: "Playfair Display", Georgia, serif;
@@ -431,7 +431,7 @@ a { color: inherit; }
 
 .sakura {
   z-index: 81 !important;
-  background: linear-gradient(135deg, #ffdce7 0%, #da8199 58%, #fff5f8 100%) !important;
+  background: linear-gradient(135deg, #ffd9dc 0%, #d94b52 58%, #fff5f5 100%) !important;
   box-shadow: 0 1px 2px rgba(126, 44, 70, .11);
   opacity: .70;
 }
@@ -456,7 +456,7 @@ a { color: inherit; }
   border-radius: 78% 16% 72% 28%;
   background:
     radial-gradient(circle at 28% 28%, rgba(255, 255, 255, .92) 0 10%, transparent 29%),
-    linear-gradient(135deg, #fff0f5 0%, #f4afc1 42%, #d96d8d 72%, #fff7fa 100%);
+    linear-gradient(135deg, #fff0f0 0%, #ed9297 42%, #d83a43 72%, #fff7f7 100%);
   box-shadow: 0 1px 3px rgba(126, 44, 70, .14);
   transform-origin: 70% 70%;
   will-change: transform, opacity;
@@ -546,7 +546,7 @@ a { color: inherit; }
   pointer-events: none;
   background:
     radial-gradient(ellipse at 0 0, rgba(232, 174, 190, .12), transparent 33%),
-    radial-gradient(ellipse at 100% 100%, rgba(23, 63, 120, .07), transparent 35%);
+    radial-gradient(ellipse at 100% 100%, rgba(197, 29, 36, .07), transparent 35%);
 }
 
 .paper-botanical {
@@ -573,43 +573,19 @@ a { color: inherit; }
 }
 
 .academic-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(5px, .8vmin, 8px);
-  margin-bottom: 1px;
-  color: var(--neu-blue);
+  margin-bottom: 2px;
 }
 
-.academic-mark__cap {
-  display: grid;
-  place-items: center;
-  width: clamp(24px, 3.6dvh, 34px);
-  height: clamp(24px, 3.6dvh, 34px);
-  border: 1.5px solid var(--rose);
-  border-radius: 50%;
-  background: rgba(255,255,255,.62);
-}
-
-.academic-mark__cap svg {
-  width: 66%;
-  height: 66%;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.academic-mark strong {
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 2.45dvh, 1.62rem);
-  font-weight: 800;
+.academic-mark__logo {
+  display: block;
+  width: clamp(38px, 5.2dvh, 52px);
+  height: clamp(38px, 5.2dvh, 52px);
+  object-fit: contain;
 }
 
 .university-heading h2 {
   margin: 2px 0 1px;
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-size: clamp(.68rem, 1.5dvh, 1.03rem);
   font-weight: 700;
   letter-spacing: .045em;
@@ -617,7 +593,7 @@ a { color: inherit; }
 
 .university-heading p {
   margin: 0;
-  color: var(--neu-blue-soft);
+  color: var(--ftu-red-soft);
   font-family: var(--serif);
   font-size: clamp(.52rem, 1.08dvh, .72rem);
   font-style: italic;
@@ -658,11 +634,11 @@ a { color: inherit; }
   gap: 8px;
   width: min(245px, 70%);
   margin: clamp(3px, .55dvh, 6px) auto clamp(4px, .8dvh, 8px);
-  color: var(--neu-blue);
+  color: var(--ftu-red);
 }
 
-.cap-divider span { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(22,63,120,.5)); }
-.cap-divider span:last-child { background: linear-gradient(90deg, rgba(22,63,120,.5), transparent); }
+.cap-divider span { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(197,29,36,.5)); }
+.cap-divider span:last-child { background: linear-gradient(90deg, rgba(197,29,36,.5), transparent); }
 .cap-divider svg {
   flex: 0 0 clamp(23px, 3.3dvh, 31px);
   width: clamp(23px, 3.3dvh, 31px);
@@ -675,7 +651,7 @@ a { color: inherit; }
 
 .formal-line {
   margin: 0;
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-size: clamp(.58rem, 1.25dvh, .88rem);
   font-weight: 500;
 }
@@ -692,7 +668,7 @@ a { color: inherit; }
 .guest-rule {
   width: min(315px, 72%);
   margin: 0 auto clamp(2px, .55dvh, 5px);
-  border-top: 1.5px dotted rgba(22,63,120,.38);
+  border-top: 1.5px dotted rgba(197,29,36,.38);
 }
 
 .formal-line--second { margin-bottom: 0; }
@@ -718,7 +694,7 @@ a { color: inherit; }
 
 .ceremony-year {
   margin: clamp(2px, .35dvh, 4px) 0 0;
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-family: var(--serif);
   font-size: clamp(.72rem, 1.55dvh, 1.08rem);
 }
@@ -757,7 +733,7 @@ a { color: inherit; }
   place-items: center;
   width: clamp(24px, 3.8dvh, 34px);
   height: clamp(24px, 3.8dvh, 34px);
-  color: var(--neu-blue);
+  color: var(--ftu-red);
 }
 .detail-icon svg {
   width: 85%;
@@ -772,7 +748,7 @@ a { color: inherit; }
 .detail-item span {
   display: block;
   margin-bottom: 2px;
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-size: clamp(.48rem, .98dvh, .68rem);
   font-weight: 700;
   letter-spacing: .04em;
@@ -795,7 +771,7 @@ a { color: inherit; }
   line-height: 1.3;
 }
 .detail-item em {
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-size: clamp(.58rem, 1.22dvh, .84rem);
   font-weight: 700;
 }
@@ -808,11 +784,11 @@ a { color: inherit; }
 .detail-item a {
   display: inline-block;
   margin-top: 3px;
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-size: clamp(.44rem, .9dvh, .61rem);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(22,63,120,.22);
+  border-bottom: 1px solid rgba(197,29,36,.22);
 }
 
 .countdown {
@@ -828,7 +804,7 @@ a { color: inherit; }
   justify-items: center;
   padding: clamp(3px, .7dvh, 6px) clamp(5px, 1dvh, 10px);
   border-radius: 8px;
-  background: rgba(23, 63, 120, .07);
+  background: rgba(197, 29, 36, .07);
 }
 
 .countdown__num {
@@ -840,7 +816,7 @@ a { color: inherit; }
 }
 
 .countdown__block small {
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-size: clamp(.32rem, .6dvh, .46rem);
   font-weight: 600;
   letter-spacing: .05em;
@@ -860,7 +836,7 @@ a { color: inherit; }
   min-height: 110px;
   max-height: 235px;
   align-self: center;
-  background: linear-gradient(180deg, transparent, rgba(22,63,120,.48) 15%, rgba(22,63,120,.48) 85%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(197,29,36,.48) 15%, rgba(197,29,36,.48) 85%, transparent);
 }
 .event-axis i {
   position: absolute;
@@ -870,8 +846,8 @@ a { color: inherit; }
   height: 6px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: var(--neu-blue);
-  box-shadow: 0 0 0 3px rgba(22,63,120,.07);
+  background: var(--ftu-red);
+  box-shadow: 0 0 0 3px rgba(197,29,36,.07);
 }
 
 .graduate-photo {
@@ -932,7 +908,7 @@ a { color: inherit; }
   align-items: end;
   min-height: 0;
   margin-top: clamp(2px, .5dvh, 5px);
-  color: var(--neu-blue);
+  color: var(--ftu-red);
 }
 
 .invitation-footer::before {
@@ -942,14 +918,14 @@ a { color: inherit; }
   right: 8%;
   top: -1px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(22,63,120,.14), transparent);
+  background: linear-gradient(90deg, transparent, rgba(197,29,36,.14), transparent);
 }
 
 .diploma-art svg {
   display: block;
   width: clamp(40px, 6.2dvh, 58px);
   fill: none;
-  stroke: var(--neu-blue-soft);
+  stroke: var(--ftu-red-soft);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -984,7 +960,7 @@ a { color: inherit; }
   padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   overflow: hidden;
   background:
-    radial-gradient(circle at center, rgba(255,250,249,.92), rgba(237,208,218,.98)),
+    radial-gradient(circle at center, rgba(255,250,249,.96), rgba(139,17,23,.98)),
     var(--canvas);
   transition: opacity .62s ease, visibility .62s ease;
 }
@@ -1036,7 +1012,7 @@ a { color: inherit; }
 }
 .open-gate__card p {
   margin: 0;
-  color: var(--neu-blue);
+  color: var(--ftu-red);
   font-size: clamp(.58rem, 1.2dvh, .72rem);
   font-weight: 600;
   letter-spacing: .08em;

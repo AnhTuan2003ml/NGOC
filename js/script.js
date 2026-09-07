@@ -1,15 +1,14 @@
 /**
- * Thiệp mời tốt nghiệp — Nguyễn Thị Bích Ngọc / NEU
+ * Thiệp mời tốt nghiệp — Nguyễn Ngọc Duy / FTU
  * --------------------------------------------------
  * Chỉ cần sửa EVENT_CONFIG nếu có lịch lễ chính xác.
  * Nhạc nền dùng YouTube và lặp vô hạn sau khi khách bấm "Mở thiệp mời".
  */
 
 const EVENT_CONFIG = {
-  time: "08:15 SÁNG",
-  day: "22-08-2026",
-  date: "THỨ BẢY, 22-08-2026",
-  youtubeVideoId: "jLRQfIxxeU4"
+  time: "8H SÁNG",
+  date: "THỨ BẢY, 19.09.2026",
+  youtubeVideoId: "niPkap1ozUA"
 };
 
 const gate = document.getElementById("open-gate");
@@ -24,7 +23,6 @@ let musicPlaying = false;
 
 function applyEventConfig() {
   document.getElementById("event-time").textContent = EVENT_CONFIG.time;
-  document.getElementById("event-day").textContent = EVENT_CONFIG.day;
   document.getElementById("event-date").textContent = EVENT_CONFIG.date;
 }
 
@@ -189,7 +187,7 @@ window.addEventListener("resize", refreshSakuraDensity, { passive: true });
 
 applyEventConfig();
 
-const COUNTDOWN_TARGET = new Date(2026, 7, 22, 8, 15, 0);
+const COUNTDOWN_TARGET = new Date(2026, 8, 19, 8, 0, 0);
 const countdownElements = {
   days: document.getElementById("cd-days"),
   hours: document.getElementById("cd-hours"),
